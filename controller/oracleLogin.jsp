@@ -41,17 +41,11 @@
 	        	conn.setAutoCommit(false);
 	        	conn.close();
 	        	
-	            //out.println("<form method=post action=../view/login.html >");
-	    	    //out.println("<p><CENTER>Your are Successfully Connecting to the Oracle!<br>");
-	    	    //out.println("Click the continue button to continue.</p>");
-	    	    //out.println("<input type=submit name=admin value=Continue>");
-	            //out.println("</CENTER></form>");
 			    out.println("<script language=javascript type=text/javascript>");
 			    out.println("setTimeout("+"\"javascript:location.href='../view/login.html'\""+", 0);");
 			    out.println("</script>");
 		    }
 	        catch(Exception ex){
-	        	//out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
 			    out.println("<hr><center>" + (ex.getMessage()).substring(11) + "</center><hr>");;
 			    out.println("<script language=javascript type=text/javascript>");
 			    out.println("setTimeout("+"\"javascript:location.href='../index.html'\""+", 2500);");
