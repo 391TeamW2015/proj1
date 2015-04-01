@@ -23,7 +23,7 @@
 			if((sqlname.equals("")) || (sqlpwd.equals(""))){
 				out.println("<p><CENTER>Please provide your Oracle User Name and Password!<br>");
 		    	out.println("<script language=javascript type=text/javascript>");
-		    	out.println("setTimeout("+"\"javascript:location.href='oracle_login.html'\""+", 2500);");
+		    	out.println("setTimeout("+"\"javascript:location.href='../index.html'\""+", 2500);");
 		    	out.println("</script></div>");
 			}
 			else{
@@ -48,7 +48,7 @@
 			        conn = DriverManager.getConnection(dbstring,sqlname,sqlpwd);
 	        		conn.setAutoCommit(false);
 	        		conn.close();
-	                out.println("<form method=post action=login.html>");
+	                out.println("<form method=post action=../view/login.html>");
 	    	        out.println("<p><CENTER>Your are Successfully Connecting to the Oracle!<br>");
 	    	        out.println("Click the continue button to continue.</p>");
 	    	        out.println("<input type=submit name=admin value=Continue>");

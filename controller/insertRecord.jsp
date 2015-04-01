@@ -33,9 +33,10 @@
         	out.println("<p><CENTER>rid = "+rid+"</CENTER></p>");
 	       */
 	       
-	        /**
+	        
         	out.println("<p><CENTER>patientId = "+patientId+"</CENTER></p>");
         	out.println("<p><CENTER>doctorId = "+doctorId+"</CENTER></p>");
+        	/*
         	out.println("<p><CENTER>testType = "+testType+"</CENTER></p>");
         	out.println("<p><CENTER>diagnosis = "+diagnosis+"</CENTER></p>");
         	out.println("<p><CENTER>description = "+description+"</CENTER></p>");

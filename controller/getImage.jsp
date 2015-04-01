@@ -46,9 +46,9 @@
         	catch(Exception e){
         		canConnect = false;
 	        	out.println("<hr>" + e.getMessage() + "<hr>");
-		    	/* out.println("<script language=javascript type=text/javascript>");
-		    	out.println("setTimeout("+"\"javascript:location.href='../view.uploadImg.html'\""+", 2500);");
-		    	out.println("</script></div>"); */
+		    	out.println("<script language=javascript type=text/javascript>");
+		    	out.println("setTimeout("+"\"javascript:location.href='../view.uploadImg.html'\""+", 3000);");
+		    	out.println("</script></div>"); 
         	}
 			if(canConnect){
 				try{
@@ -79,9 +79,9 @@
 				    	    
 				    	    //out.println("<p><CENTER> rset1.next() = "+rset1.next()+"</CENTER></p>");
 			    	    	pic_id = rset1.getInt(1);
-			    	    	out.println("<p><CENTER>stop at above line : "+rec_id+"</CENTER></p>");
+			    	    	//out.println("<p><CENTER>stop at above line : "+rec_id+"</CENTER></p>");
 			    	    
-			    	    	out.println("<p><CENTER> pic_id = "+pic_id+"</CENTER></p>");
+			    	    	//out.println("<p><CENTER> pic_id = "+pic_id+"</CENTER></p>");
 				    	   /*  if (rset1.next()) {
 				    	    	out.println("<p><CENTER> rset1.next() = "+rset1.next()+"</CENTER></p>");
 				    	    	pic_id = rset1.getInt(1);
@@ -127,7 +127,7 @@
 							out.println("<center><b>"+ response_message +"</b></center>");
 							out.println("</div></BODY></HTML>");
 					    	out.println("<script language=javascript type=text/javascript>");
-					    	out.println("setTimeout("+"\"javascript:location.href='../view/radiologist.html'\""+", 1000);");
+					    	out.println("setTimeout("+"\"javascript:location.href='../view/radiologist.html'\""+", 3000);");
 					    	out.println("</script></div>");
 				    	}
 				    }
@@ -140,9 +140,9 @@
 					out.println("<br><br><br><br><br>");				
 					out.println("<center><b>"+response_message +"</b></center>");
 					out.println("</div></BODY></HTML>");
-			    	/* out.println("<script language=javascript type=text/javascript>");
+			    	out.println("<script language=javascript type=text/javascript>");
 			    	out.println("setTimeout("+"\"javascript:location.href='../view/uploadImg.html'\""+", 2500);");
-			    	out.println("</script></div>"); */
+			    	out.println("</script></div>");
 	        	}
 				    
 			}
@@ -152,9 +152,9 @@
 			out.println("<br><br><br><br><br>");
 			out.println("<center><b>Can't upload file other than jpg!</b></center>");
 			out.println("</div></BODY></HTML>");
-	    	/* out.println("<script language=javascript type=text/javascript>");
-	    	out.println("setTimeout("+"\"javascript:location.href='../view/uploadImg.html'\""+", 2500);");
-	    	out.println("</script></div>"); */
+	        out.println("<script language=javascript type=text/javascript>");
+	    	out.println("setTimeout("+"\"javascript:location.href='../view/uploadImg.html'\""+", 3000);");
+	    	out.println("</script></div>"); 
     %>
 </BODY>
 </HTML>

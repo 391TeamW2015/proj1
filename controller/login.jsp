@@ -22,7 +22,7 @@
 			if (userName.equals("") && passwd.equals("")){
 				out.println("<p><center>Please Enter your User Name and Password!</center></p>");
 		    	out.println("<script language=javascript type=text/javascript>");
-		    	out.println("setTimeout("+"\"javascript:location.href='login.html'\""+", 2500);");
+		    	out.println("setTimeout("+"\"javascript:location.href='../view/login.html'\""+", 2500);");
 		    	out.println("</script>");
 			}
 			else{
