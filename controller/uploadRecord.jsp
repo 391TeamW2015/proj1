@@ -231,7 +231,16 @@
         	out.println("<tr><td>Description:</td><td><textarea style='resize:none' rows = 5 cols = 40 name=description maxlength=1024></textarea></td></tr>");
 			out.println("<tr><td ALIGN=CENTER COLSPAN=2><br><brs><input type='submit' name='.submit' value='Upload Medical Images'></td></tr></table></H2>");
 			
-			out.println("<H3><Center></FORM><br><br><br><FORM ACTION='../view/radiologist.html' METHOD='post'><INPUT TYPE='submit' NAME='ra_back' VALUE='Back'>");
+			out.println("<H3><Center></FORM><br><br><br>");
+			
+			// the alert window part
+			out.println("<script type='text/javascript' src='../js/uploadingValidate.js'></script>");
+			out.println("<script type='text/javascript'>");
+			out.println("validate();");
+			out.println("</script>");
+			
+			out.println("<FORM ACTION='../view/radiologist.html' METHOD='post'><INPUT TYPE='submit' NAME='ra_back' VALUE='Back'>");
+			
 			out.println("<br><br><a href='../view/userDocumentation.html' target='_blank'>Help</a></FORM></div></CENTER></BODY></HTML></Center></H3>");
 			session.setAttribute("rid",rID);
 %>

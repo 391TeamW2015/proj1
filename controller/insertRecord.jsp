@@ -15,8 +15,15 @@
 			
 			//get the user input from the login page
 			String patientId=  (request.getParameter("patientList")).trim();
+			Integer patientID =  Integer.parseInt(patientId);
+			/* while(patientID == -1){
+				//alert("Must select a patient!\n");
+				patientId =  (request.getParameter("patientList")).trim();
+				patientID =  Integer.parseInt(patientId);
+			} */
+			
 			String doctorId =  (request.getParameter("doctorList")).trim();
-	        Integer patientID =  Integer.parseInt(patientId);
+	        
 	        Integer doctorID =   Integer.parseInt(doctorId);
 	        String testType =  (request.getParameter("testtype")).trim();
 	        String diagnosis=  (request.getParameter("diagnosis")).trim();
@@ -27,7 +34,7 @@
         	java.util.Date myDate = new java.util.Date();
 	        java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
 	        
-	        /**
+	        /*
         	out.println("<p><CENTER>sqlname = "+sqlname+"</CENTER></p>");
         	out.println("<p><CENTER>sqlpswd = "+sqlpwd+"</CENTER></p>");
         	out.println("<p><CENTER>rid = "+rid+"</CENTER></p>");
