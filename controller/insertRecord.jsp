@@ -74,14 +74,14 @@
         	try{
         		stmt = conn.createStatement();
         		//out.println("<p><CENTER>1 "+ "I am in this line" +"</CENTER></p>");
-	    	    rset = stmt.executeQuery("select record_id from radiology_record"); // I need to select how many a
+	    	    rset = stmt.executeQuery("select count(*) from radiology_record"); // I need to select how many a
 	    	    //out.println("<p><CENTER>2 "+ "I am in this line" +"</CENTER></p>");
 	    	    rset.next();
 	    	    //out.println("<p><CENTER>3 "+ "I am in this line" +"</CENTER></p>");
 	    	    rec_id = rset.getInt(1)+1;
 	    	    //out.println("<p><CENTER>4 "+ "I am in this line" +"</CENTER></p>");
 	    	    
-	    	    session.setAttribute("rec_id = ",rec_id);
+	    	    session.setAttribute("rec_id",rec_id);
 	    	    out.println("<p><CENTER>rec_id: "+rec_id+"</CENTER></p>");
 	    	    
         		pstmt = conn.prepareStatement("INSERT INTO radiology_record (record_id,patient_id,doctor_id,radiologist_id,test_type,prescribing_date,test_date,diagnosis,description)"

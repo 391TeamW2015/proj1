@@ -46,9 +46,9 @@
         	catch(Exception e){
         		canConnect = false;
 	        	out.println("<hr>" + e.getMessage() + "<hr>");
-		    	out.println("<script language=javascript type=text/javascript>");
+		    	/* out.println("<script language=javascript type=text/javascript>");
 		    	out.println("setTimeout("+"\"javascript:location.href='../view.uploadImg.html'\""+", 2500);");
-		    	out.println("</script></div>");
+		    	out.println("</script></div>"); */
         	}
 			if(canConnect){
 				try{
@@ -74,9 +74,15 @@
 				    	    BufferedImage NormalSize=shrink(image,2);
 
 				    	    Statement s = con.createStatement();
-				    	    ResultSet rset1 = s.executeQuery("select image_id from pacs_images"); // here may need to be changed
+				    	    ResultSet rset1 = s.executeQuery("select count(*) from pacs_images"); // Changed 2015-04-01; here may need to be changed
 				    	    rset1.next();
-				    	    if (rset1.next()) {
+				    	    
+				    	    //out.println("<p><CENTER> rset1.next() = "+rset1.next()+"</CENTER></p>");
+			    	    	pic_id = rset1.getInt(1);
+			    	    	out.println("<p><CENTER>stop at above line : "+rec_id+"</CENTER></p>");
+			    	    
+			    	    	out.println("<p><CENTER> pic_id = "+pic_id+"</CENTER></p>");
+				    	   /*  if (rset1.next()) {
 				    	    	out.println("<p><CENTER> rset1.next() = "+rset1.next()+"</CENTER></p>");
 				    	    	pic_id = rset1.getInt(1);
 				    	    	out.println("<p><CENTER>stop at above line : "+rec_id+"</CENTER></p>");
@@ -86,7 +92,7 @@
 				    	    else {
 				    	    	pic_id = 1;
 				    	    	out.println("<p><CENTER> pic_id = "+pic_id+"</CENTER></p>");
-				    	    }
+				    	    } */
 				    	    
 				    	    s.execute("INSERT INTO pacs_images VALUES("+rec_id+","+pic_id+",empty_blob(),empty_blob(),empty_blob())");
 				    	    ResultSet resSet_II=s.executeQuery("SELECT * FROM pacs_images WHERE record_id="+rec_id+" AND image_id="+pic_id+" FOR UPDATE");
@@ -134,9 +140,9 @@
 					out.println("<br><br><br><br><br>");				
 					out.println("<center><b>"+response_message +"</b></center>");
 					out.println("</div></BODY></HTML>");
-			    	out.println("<script language=javascript type=text/javascript>");
+			    	/* out.println("<script language=javascript type=text/javascript>");
 			    	out.println("setTimeout("+"\"javascript:location.href='../view/uploadImg.html'\""+", 2500);");
-			    	out.println("</script></div>");
+			    	out.println("</script></div>"); */
 	        	}
 				    
 			}
@@ -146,9 +152,9 @@
 			out.println("<br><br><br><br><br>");
 			out.println("<center><b>Can't upload file other than jpg!</b></center>");
 			out.println("</div></BODY></HTML>");
-	    	out.println("<script language=javascript type=text/javascript>");
+	    	/* out.println("<script language=javascript type=text/javascript>");
 	    	out.println("setTimeout("+"\"javascript:location.href='../view/uploadImg.html'\""+", 2500);");
-	    	out.println("</script></div>");
+	    	out.println("</script></div>"); */
     %>
 </BODY>
 </HTML>
