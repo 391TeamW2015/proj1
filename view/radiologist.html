@@ -6,30 +6,33 @@
 <BODY>
 <!--This is the Radiologist page-->
 <div id="image" style="background: url(../theme.jpg) no-repeat; width: 100%; height: 100%; background-size: 100%;">
-<br><br><br><br><br><br><br><br>	
+<br><br><br><br><br><br><br>
+
 <H1><CENTER>Radiologist</CENTER></H1>
+<P><CENTER>I am a radiologist! Do you need X-ray?</CENTER></P>	
 
-<P><CENTER>I am a radiologist! Do you need X-ray?</P>
+<br>
 
+<h2><center>
 <FORM ACTION="search.html" METHOD="post" >
-<INPUT TYPE="submit" NAME="Search" VALUE="Search">
+<INPUT TYPE="submit" NAME="Search" VALUE="Search" style= "width: 300; height: 30">
 </FORM>
 
 <FORM ACTION="../controller/uploadRecord.jsp" METHOD="post" >
-<INPUT TYPE="submit" NAME="Uploading" VALUE="Uploading">
+<INPUT TYPE="submit" NAME="Uploading" VALUE="Uploading" style= "width: 300; height: 30">
 </FORM>
-
-<FORM ACTION="../controller/updateUser.jsp" METHOD="post" >
-<INPUT TYPE="submit" NAME="manage" VALUE="Modify Personal Information">
-</FORM>
-
-<FORM ACTION="logout.html" METHOD="post" >
-<INPUT TYPE="submit" NAME="LogOut" VALUE="Log Out">
-</FORM>
+</center></h2>
 
 <br><br>
+
+<h3><center>
+<FORM ACTION="login.html" METHOD="post" >
+<INPUT TYPE="submit" NAME="LogOut" VALUE="Log Out" style= "width: 300; height: 30">
+</FORM>
+<br>
 <a href='userDocumentation.html' target='_blank'>Help</a>
-</CENTER>
+</center></h3>
+
 </div>
 </BODY>
 </HTML>

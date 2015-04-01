@@ -109,7 +109,7 @@
 		        }
 	  
 	        else{
-		        out.println("<p><CENTER><b>Either your User Name or Password is Uncrect!</b></CENTER></p>");
+		        out.println("<p><CENTER><b><b><b>Either your User Name or Password is Uncrect!</b><b><b></CENTER></p>");
 			    out.println("<script language=javascript type=text/javascript>");
 			    out.println("setTimeout("+"\"javascript:location.href='../view/login.html'\""+", 2500);");
 			    out.println("</script>");
