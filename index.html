@@ -1,6 +1,23 @@
 <HTML>
 <HEAD>
 <TITLE>Oracle Login</TITLE>
+
+<script language = "JavaScript" type = "text/javascript">
+function checkform(form) {
+	if (form.SQLUSERID.value == "") {
+		alert("Please Enter Your Username for the Orocle");
+		form.SQLUSERID.focus();
+		return false;
+	}
+	if (form.SQLPASSWD.value == "") {
+		alert("Please Enter Your Password for the Orocle");
+		form.SQLPASSWD.focus();
+		return false;
+	}
+	return true;
+}
+</script>
+
 </HEAD>
 
 <BODY>
@@ -11,7 +28,7 @@
 
 <H1>
 <CENTER>Connect to Oracle
-<FORM NAME="LoginForm" ACTION="controller/oracleLogin.jsp" METHOD="post" >
+<FORM NAME="LoginForm" ACTION="controller/oracleLogin.jsp" METHOD="post" onSubmit = "return checkform(this);">
 <P>Before connecting to the RIS, you need to connect to the oracle first.</P>
 </CENTER>
 

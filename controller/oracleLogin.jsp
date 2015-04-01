@@ -19,58 +19,46 @@
 			session.setAttribute("SQLUSERID",sqlname);
 			session.setAttribute("SQLPASSWD",sqlpwd);
 					
-			//if user dont enter complete information, return bad response
-			if((sqlname.equals("")) || (sqlpwd.equals(""))){
-				out.println("<p><CENTER>Please provide your Oracle User Name and Password!<br>");
-		    	out.println("<script language=javascript type=text/javascript>");
-		    	out.println("setTimeout("+"\"javascript:location.href='../index.html'\""+", 2500);");
-		    	out.println("</script></div>");
-			}
-			else{
-		        //establish the connection to the underlying database
-	        	Connection conn = null;
+
+		    //establish the connection to the underlying database
+	        Connection conn = null;
 		
-		        String driverName = "oracle.jdbc.driver.OracleDriver";
-	            String dbstring = "jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
+		    String driverName = "oracle.jdbc.driver.OracleDriver";
+	        String dbstring = "jdbc:oracle:thin:@gwynne.cs.ualberta.ca:1521:CRS";
 		
-		        try{
-			        //load and register the driver
-	        		Class drvClass = Class.forName(driverName); 
-		        	DriverManager.registerDriver((Driver) drvClass.newInstance());
-	        	}
-		        catch(Exception ex){
-		        	out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
-		
-		        }
+		    try{
+			    //load and register the driver
+	        	Class drvClass = Class.forName(driverName); 
+		        DriverManager.registerDriver((Driver) drvClass.newInstance());
+	        }
+		    catch(Exception ex){
+		        out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
+		    }
 	
-	        	try{
-		        	//establish the connection 
-			        conn = DriverManager.getConnection(dbstring,sqlname,sqlpwd);
-	        		conn.setAutoCommit(false);
-	        		conn.close();
-	                out.println("<form method=post action=../view/login.html>");
-	    	        out.println("<p><CENTER>Your are Successfully Connecting to the Oracle!<br>");
-	    	        out.println("Click the continue button to continue.</p>");
-	    	        out.println("<input type=submit name=admin value=Continue>");
-	                out.println("</CENTER></form>");
-			    	out.println("<script language=javascript type=text/javascript>");
-			    	out.println("setTimeout("+"\"javascript:location.href='../view/login.html'\""+", 1000);");
-			    	out.println("</script>");
-		        }
-	        	catch(Exception ex){
-	        		//out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
-			        out.println("<hr><center>" + (ex.getMessage()).substring(11) + "</center><hr>");;
-			    	out.println("<script language=javascript type=text/javascript>");
-			    	out.println("setTimeout("+"\"javascript:location.href='../index.html'\""+", 2500);");
-			    	out.println("</script>");
-	        	}
-			}
+	        try{
+		        //establish the connection 
+			    conn = DriverManager.getConnection(dbstring,sqlname,sqlpwd);
+	        	conn.setAutoCommit(false);
+	        	conn.close();
+	        	
+	            //out.println("<form method=post action=../view/login.html >");
+	    	    //out.println("<p><CENTER>Your are Successfully Connecting to the Oracle!<br>");
+	    	    //out.println("Click the continue button to continue.</p>");
+	    	    //out.println("<input type=submit name=admin value=Continue>");
+	            //out.println("</CENTER></form>");
+			    out.println("<script language=javascript type=text/javascript>");
+			    out.println("setTimeout("+"\"javascript:location.href='../view/login.html'\""+", 0);");
+			    out.println("</script>");
+		    }
+	        catch(Exception ex){
+	        	//out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
+			    out.println("<hr><center>" + (ex.getMessage()).substring(11) + "</center><hr>");;
+			    out.println("<script language=javascript type=text/javascript>");
+			    out.println("setTimeout("+"\"javascript:location.href='../index.html'\""+", 2500);");
+			    out.println("</script>");
+	        }
         }
-
-
 %>
-
-
 
 </BODY>
 </HTML>

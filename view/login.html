@@ -1,6 +1,26 @@
 <HTML>
 <HEAD>
-<TITLE>System Login</TITLE>
+<TITLE>Radiology Imformation System Login</TITLE>
+
+
+<script language = "JavaScript" type = "text/javascript">
+function checkform(form) {
+	if (form.USERID.value == "") {
+		alert("Please Enter Your Username for the RIS");
+		form.USERID.focus();
+		return false;
+	}
+	if (form.PASSWD.value == "") {
+		alert("Please Enter Your Password for the RIS");
+		form.PASSWD.focus();
+		return false;
+	}
+	return true;
+}
+</script>
+
+
+
 </HEAD>
 
 <BODY>
@@ -10,7 +30,9 @@
 
 <H1><CENTER>RIS System Login</CENTER></H1>
 
-<FORM NAME="LoginForm" ACTION="../controller/login.jsp" METHOD="post" >
+
+
+<FORM NAME="LoginForm" ACTION="../controller/login.jsp" METHOD="post" onSubmit = "return checkform(this);">
 
 <P><CENTER>To login RIS, you need to enter a valid User Name with the cooresponding Password.</P>
 <TABLE>
