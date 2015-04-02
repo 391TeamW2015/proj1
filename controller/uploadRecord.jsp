@@ -206,11 +206,35 @@
         	}
             
         	//display the result	        
-			out.println("<HTML><HEAD><TITLE>Uploading</TITLE></HEAD><BODY>");
+			out.println("<HTML><HEAD><TITLE>Uploading</TITLE>");// </HEAD><BODY>");
+        	
+        	
+        	out.println("<script language = \"JavaScript\" type = \"text/javascript\"> ");
+        	out.println("function checkform(form) { ");
+        	
+        	//out.println("alert(form.patientList.value);return false;");
+        	
+        	out.println("if (form.patientList.value == '-1') { ");
+        	out.println("alert(\"Please Select A Patient!\"); ");
+        	out.println("form.patientList.focus(); ");
+        	out.println("		return false; ");
+        	out.println("	} ");
+        	out.println("	if (form.doctorList.value == \"-1\") { ");
+        	out.println("		alert(\"Please Select A Doctor!\"); ");
+        	out.println("		form.doctorList.focus(); ");
+        	out.println("		return false; ");
+        	out.println("	} ");
+        	out.println("	return true; ");
+        	out.println("} ");
+        	out.println("</script>"); 
+        	
+        	
+        	//out.println("<HEAD><TITLE>Uploading</TITLE>");
+        	out.println("</HEAD><BODY>");
 			out.println("<div style='background: url(../theme.jpg) no-repeat; width: 100%; height: 100%; background-size: 100%;'>");
 			out.println("<br><br><br><br><br><H1><CENTER>Uploading</CENTER></H1><br>");
 			
-			out.println("<H2><FORM ACTION='insertRecord.jsp' METHOD='post'><CENTER>");
+			out.println("<H2><FORM ACTION='insertRecord.jsp' METHOD='post' onSubmit = \"return checkform(this);\"><CENTER>");
 			out.println("<table>");			
 			out.println("<tr><td>Patient ID & Name:</td><td colspan=2>");
 			int q = pidList.size();
@@ -234,12 +258,20 @@
 			out.println("<H3><Center></FORM><br><br><br>");
 			
 			// the alert window part
-			out.println("<script type='text/javascript' src='../js/uploadingValidate.js'></script>");
+			/* out.println("<script type='text/javascript' src='../js/uploadingValidate.js'></script>");
 			out.println("<script type='text/javascript'>");
 			out.println("validate();");
-			out.println("</script>");
+			out.println("</script>"); */
+			 
+			 
+			out.println("<FORM ACTION='../view/radiologist.html' METHOD='post'>");
 			
-			out.println("<FORM ACTION='../view/radiologist.html' METHOD='post'><INPUT TYPE='submit' NAME='ra_back' VALUE='Back'>");
+			/* out.println("<script type='text/javascript' src='../js/uploadingValidate.js'></script>");
+			out.println("<script type='text/javascript'>");
+			out.println("onSubmit = validate();");
+			out.println("</script> >");  */
+			
+			out.println("<INPUT TYPE='submit' NAME='ra_back' VALUE='Back'>");
 			
 			out.println("<br><br><a href='../view/userDocumentation.html' target='_blank'>Help</a></FORM></div></CENTER></BODY></HTML></Center></H3>");
 			session.setAttribute("rid",rID);
