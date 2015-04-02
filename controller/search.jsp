@@ -70,6 +70,7 @@
 	    
 	    
 	    
+<<<<<<< HEAD
 	    
 	    
 	    
@@ -84,6 +85,8 @@
 	    
 	    
 	    
+=======
+>>>>>>> d6b9448c19221238ae9dc490434494c31e7185b3
 	    // set some initial value
 	    Integer personID = null;
 	    Integer patientID = null;
@@ -91,21 +94,10 @@
 	    String From = "";
 	    String To = "";
 	    
-		//list for storage
-		ArrayList<Integer> idList = new ArrayList<Integer>();   	
-		ArrayList<String>  nameList = new ArrayList<String>();
-		ArrayList<String>  diaList = new ArrayList<String>();
-		ArrayList<String>  descList = new ArrayList<String>();
-		ArrayList<Integer> pidList = new ArrayList<Integer>();
-		ArrayList<Integer> namescore = new ArrayList<Integer>();
-		ArrayList<Integer> diascore = new ArrayList<Integer>();
-		ArrayList<Integer> descscore = new ArrayList<Integer>();
-		ArrayList<Integer> patientList = new ArrayList<Integer>();
-		
-	
 	    PreparedStatement pstmt = null;
 	 	Statement stmt = null;
 	 	ResultSet rset = null;
+<<<<<<< HEAD
 	 			
 	 	//select person ID of this account
 	 	String rid = "select person_id from users where user_name = '"+userName+"'";
@@ -116,9 +108,48 @@
 		    rset = stmt.executeQuery(rid); 
 		    rset = stmt.executeQuery(sqlName);
 		    
-	    }  catch(Exception ex){
-			out.println("<hr><center> here" + ex.getMessage() + "</center><hr>");
+=======
+	 	String getResult = "";
+
+	    
+	    
+	    
+	    if (classType.equals("a")) {
+		 	getResult = "select person_id from users where user_name = '"+userName+"'";
 	    }
+	    else if (classType.equals("r")) {
+		 	getResult = "select person_id from users where user_name = '"+userName+"'";
+	    }
+	    else if (classType.equals("d")) {
+		 	getResult = "select person_id from users where user_name = '"+userName+"'";
+	    }
+	    else {
+		 	getResult = "select person_id from users where user_name = '"+userName+"'";
+	    }
+	    
+	    // try the different sql
+	    try{
+	        stmt = conn.createStatement();
+		    rset = stmt.executeQuery(getResult); 
+>>>>>>> d6b9448c19221238ae9dc490434494c31e7185b3
+	    }  catch(Exception ex){
+			out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
+	    }
+	    
+    	rset.next();
+    	out.println("<hr><center>classType = "+ classType +" with ID = "+rset.getInt(1)+" </center><hr>");
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+
+	 			
+
 
 	    while(rset != null && rset.next()){
     		Integer testing= new Integer(rset.getInt(1));
