@@ -96,7 +96,7 @@
 			    	out.println("<div style='background: url(../theme.jpg) no-repeat; width: 100%; height: 100%; background-size: 100%;'>");
 			    	out.println("<BR><p><CENTER><b>Insert Successful!</b></CENTER></p>");
 			    	out.println("<script language=javascript type=text/javascript>");
-			    	out.println("setTimeout("+"\"javascript:location.href='newDoctor.jsp'\""+", 1000);");
+			    	out.println("setTimeout("+"\"javascript:location.href='../view/userManagement.html'\""+", 1000);");
 			    	out.println("</script></div>");
 	        	}
 	

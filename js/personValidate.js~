@@ -18,7 +18,7 @@ function validate()
      document.newUserRegistration.personid.focus() ;
      return false;
    }  
-   if (( document.newUserRegistration.personid.value != parseInt(document.newUserRegistration.personid.value) ))
+   if (( document.newUserRegistration.personid.value !== parseInt(document.newUserRegistration.personid.value) ))
    {
      alert( "Please provide valid Person ID!" );
      document.newUserRegistration.personid.focus() ;
