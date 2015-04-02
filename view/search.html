@@ -100,18 +100,18 @@ Search Content:
 <td>To:</td>
 <td>
 
-<select name="YEAR">
+<select name="YEAR" id="toYear" onchange="populate('toYear','toMonth','toDate')">
 <option value="NULL">Year</option>
 <script language="JavaScript">
    var i ;
-   for(i=2015; i>=1700; i--)
+   for(i=2015; i>=1900; i--)
    { 
     document.write("<option value="+i+"><fond color='black'>"+i+"</option>") ;
    }
 </script>
 </select>
 
-<select name="MONTH">
+<select name="MONTH" id="toMonth" onchange="populate('toYear','toMonth','toDate')">
 <option value="NULL">Month</option>
 <option value="January">January</option>
 <option value="February">February</option>
@@ -127,15 +127,8 @@ Search Content:
 <option value="December">December</option>
 </select>
 
-<select name="DAY">
+<select name="DAY" id="toDate" onload="populate('toYear','toMonth','toDate')">
 <option value="NULL">Day</option>
-<script language="JavaScript">
-   var i ;
-   for(i=01; i<=31; i++)
-   { 
-    document.write("<option value="+i+"><fond color='black'>"+i+"</option>") ;
-   }
-</script>
 </select>
 
 </td>

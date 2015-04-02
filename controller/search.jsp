@@ -79,6 +79,11 @@
 	    
 	    
 	    
+	    
+	    
+	    
+	    
+	    
 	    // set some initial value
 	    Integer personID = null;
 	    Integer patientID = null;
@@ -104,14 +109,33 @@
 	 			
 	 	//select person ID of this account
 	 	String rid = "select person_id from users where user_name = '"+userName+"'";
+	 	String sqlName = "select * from persons where first_name='*"+searchText+"*' and last_name='*"+searchText+"*'";
 	 			
 	    try{
 	        stmt = conn.createStatement();
 		    rset = stmt.executeQuery(rid); 
+		    rset = stmt.executeQuery(sqlName);
+		    
 	    }  catch(Exception ex){
 			out.println("<hr><center> here" + ex.getMessage() + "</center><hr>");
 	    }
 
+	    while(rset != null && rset.next()){
+    		Integer testing= new Integer(rset.getInt(1));
+    		//didList.add(testing);
+    		out.println("<hr><center> " + testing + "</center><hr>");
+    	}
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
+	    
 	    
 	    /*
 	    a patient can only view his/her own records; 
