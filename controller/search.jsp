@@ -70,23 +70,8 @@
 	    
 	    
 	    
-<<<<<<< HEAD
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-=======
->>>>>>> d6b9448c19221238ae9dc490434494c31e7185b3
+
+
 	    // set some initial value
 	    Integer personID = null;
 	    Integer patientID = null;
@@ -97,7 +82,7 @@
 	    PreparedStatement pstmt = null;
 	 	Statement stmt = null;
 	 	ResultSet rset = null;
-<<<<<<< HEAD
+
 	 			
 	 	//select person ID of this account
 	 	String rid = "select person_id from users where user_name = '"+userName+"'";
@@ -107,8 +92,12 @@
 	        stmt = conn.createStatement();
 		    rset = stmt.executeQuery(rid); 
 		    rset = stmt.executeQuery(sqlName);
+	    }
+
 		    
-=======
+		    
+		    
+		    
 	 	String getResult = "";
 
 	    
@@ -131,7 +120,7 @@
 	    try{
 	        stmt = conn.createStatement();
 		    rset = stmt.executeQuery(getResult); 
->>>>>>> d6b9448c19221238ae9dc490434494c31e7185b3
+
 	    }  catch(Exception ex){
 			out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
 	    }
