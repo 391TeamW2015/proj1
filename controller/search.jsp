@@ -8,9 +8,23 @@
 <%@page import="java.sql.*" import="java.text.SimpleDateFormat" import= "java.util.*"%>
 <%@page import = "java.io.*"%>
 <%@page import = "javax.servlet.*"%>
-<%@page import = "javax.servlet.http.*" %><% 
+<%@page import = "javax.servlet.http.*" %>
+<%!
+public String printRowInTable(Integer rec_id, Integer patient_id,
+		              Integer doc_id, Integer radio_id, String test_type){
+	String html = "<tr>";
+	html += "<th>"+rec_id+"</th>";
+	html += "<th>"+patient_id+"</th>";
+	html += "<th>"+doc_id+"</th>";
+	html += "<th>"+radio_id+"</th>";
+	html += "<th>"+test_type+"</th>";
+	html += "</tr>";
+    return html;
+}
+%>
 
-	
+
+<% 
 	    out.println("<center>");
 	    
 	    //get oracle account
@@ -82,18 +96,35 @@
 	    PreparedStatement pstmt = null;
 	 	Statement stmt = null;
 	 	ResultSet rset = null;
+	 	ResultSet findNameResult = null;
 
 	 			
 	 	//select person ID of this account
 	 	String rid = "select person_id from users where user_name = '"+userName+"'";
-	 	String sqlName = "select * from persons where first_name='*"+searchText+"*' and last_name='*"+searchText+"*'";
+	 	
+	 	//select * from persons where first_name like '%fei%' or last_name like '%fei%'
+	 	String sqlName = "select * from persons where first_name like '%"+searchText+"%' or last_name like '%"+searchText+"%'";
 	 			
 	    try{
 	        stmt = conn.createStatement();
-		    rset = stmt.executeQuery(rid); 
-		    rset = stmt.executeQuery(sqlName);
+	        findNameResult = stmt.executeQuery(sqlName);
+	    } catch(Exception ex){
+			out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
 	    }
+	    
+	    while(findNameResult != null && findNameResult.next()){
+    		Integer testing= new Integer(findNameResult.getInt(1));
+    		Integer nima = findNameResult.getInt(1);
+    		
+    		out.println("<hr><center>"+testing+"</center><hr>");
+    		
+    		String firstName = findNameResult.getString("first_name");
+    		String lasstName = findNameResult.getString(3);
+    		//didList.add(testing);
+    		out.println("<hr><center>"+firstName+" "+lasstName+"</center><hr>");
+    	}
 
+	    
 		    
 		    
 		    
@@ -126,37 +157,15 @@
 	    }
 	    
     	rset.next();
-    	out.println("<hr><center>classType = "+ classType +" with ID = "+rset.getInt(1)+" </center><hr>");
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
+    	//out.println("<hr><center>classType = "+ classType +" with ID = "+rset.getInt(1)+" </center><hr>");
 	    
 
-	 			
+    	
+    	
+    	
+    	
+    	
 
-
-	    while(rset != null && rset.next()){
-    		Integer testing= new Integer(rset.getInt(1));
-    		//didList.add(testing);
-    		out.println("<hr><center> " + testing + "</center><hr>");
-    	}
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
-	    
 	    /*
 	    a patient can only view his/her own records; 
 	    a doctor can only view records of their patients; 
@@ -168,6 +177,7 @@
 			// create a table to print result
 			out.println("<br><br><br><br><br><br>");
 			out.println("<h2><b>Search Result</b></h2>");
+			
             out.println("<table border=1>");
             out.println("<tr>");
             out.println("<th>Record ID</th>");
@@ -182,6 +192,11 @@
             out.println("<th>Rank</th>");
             out.println("<th>Medical Pictures</th>");
             out.println("</tr>");
+            
+            Integer nima = 4;
+            Integer nima = findNameResult.getInt(1);
+            out.println(printRowInTable(nima,1,2,3,"X-ray"));
+            
             String recid = "";
         	out.println("</table>");
 		} catch(Exception ex){	
@@ -198,10 +213,7 @@
 		// create the back button and the link
         out.println("<form action='../view/search.html' METHOD='post'>");
         out.println("<input type='submit' name='search_back' value='Back'>");
-        out.println("<br><br><a href='userDocumentation.html' target='_blank'>Help</a></form>");        		
-
-        
-        
+        out.println("<br><br><a href='userDocumentation.html' target='_blank'>Help</a></form>");
 
 %>
 
