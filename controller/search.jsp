@@ -89,91 +89,7 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
 	    
 	    
 	    
-	    
-	    
-
-
-	    // set some initial value
-	    //Integer personID = null;
-	    //Integer patientID = null;
-	    
-	    //String From = "";
-	    //String To = "";   
-	    //PreparedStatement pstmt = null;
-	 	Statement stmt = null;
-	 	ResultSet rset = null;
-	 	ResultSet findNameResult = null;
-	 	
-
-	 	//select * from persons where first_name like '%fei%' or last_name like '%fei%'
-	 	String sqlName = "select * from persons where first_name like '%"+searchText+"%' or last_name like '%"+searchText+"%'";
-	 			
-	    try{
-	        findNameResult = conn.createStatement().executeQuery(sqlName);
-	    } catch(Exception ex){
-			out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
-	    }
-	    
-	    
-	    Integer testing = null;
-	    while(findNameResult != null && findNameResult.next()){
-    		testing= new Integer(findNameResult.getInt(1));
-    		
-    		out.println("<hr><center>"+testing+"</center><hr>");
-    		
-    		String firstName = findNameResult.getString("first_name");
-    		String lasstName = findNameResult.getString(3);
-    		//didList.add(testing);
-    		out.println("<hr><center>"+firstName+" "+lasstName+"</center><hr>");
-    	}
-
-	    
-		    
-		    
-		
-		    
-	 	String getResult = "";
-
-		Integer recordID;
-		Integer patientID;
-		Integer doctorID;
-		Integer radiologistID;
-		String testType;
-	
-		String prescribingDdate;
-		String testDate;
-	
-		String diagnosis;
-		String description;
-		
-
-        //select * from radiology_record rr, persons p, users u where u.user_name like '%xiao%' and p.person_id = u.person_id and p.person_id = rr.patient_id;              
-
-
-	    if (classType.equals("a")) {
-		 	getResult = "select * from persons p, users u where u.user_name = '"+userName+"' and p.person_id = u.person_id";
-	    }
-	    else if (classType.equals("r")) {
-		 	getResult = "select person_id from users where user_name = '"+userName+"'";
-	    }
-	    else if (classType.equals("d")) {
-		 	getResult = "select person_id from users where user_name = '"+userName+"'";
-	    }
-	    else {
-	    	//select * from radiology_record rr, users u where u.user_name = 'xiaoran' and u.person_id = rr.patient_id;
-	    	getResult = "select * from radiology_record rr, users u where u.user_name = 'liwen' and u.person_id = rr.patient_id";              
-				    	
-	    }
-	    
-	    // try the different sql
-	    try{
-	        stmt = conn.createStatement();
-		    rset = stmt.executeQuery(getResult); 
-	    }  catch(Exception ex){
-			out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
-	    }
-	    
-	    
+	  //================================table head================================
 	    /*
 	    a patient can only view his/her own records; 
 	    a doctor can only view records of their patients; 
@@ -200,7 +116,7 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
             out.println("<th>Medical Pictures</th>");
             out.println("</tr>");
             
-            out.println(printRowInTable(testing,1,2,3,"X-ray","X-ray","X-ray","X-ray","X-ray",102));
+            //out.println(printRowInTable(testing,1,2,3,"X-ray","X-ray","X-ray","X-ray","X-ray",102));
             
             String recid = "";
         	//out.println("</table>");
@@ -212,11 +128,102 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
 	        out.println("</div>");
 	        conn.rollback();
 	    }
+	  //================================table head end==============================
+	    
+	    
+
+
+	    // set some initial value
+	    //Integer personID = null;
+	    //Integer patientID = null;
+	    
+	    //String From = "";
+	    //String To = "";   
+	    //PreparedStatement pstmt = null;
+	 	Statement stmt = null;
+	 	ResultSet rset = null;
+	 	
+
+		    
+	 	String getResult = "";
+
+		Integer recordID;
+		Integer patientID;
+		Integer doctorID;
+		Integer radiologistID;
+		String testType;
+	
+		String prescribingDdate;
+		String testDate;
+	
+		String diagnosis;
+		String description;
+		
+
+        //select * from radiology_record rr, persons p, users u where u.user_name like '%xiao%' and p.person_id = u.person_id and p.person_id = rr.patient_id;              
+
+
+	    if (classType.equals("a")) {
+		 	ResultSet findNameResult = null;
+		 	
+
+		 	//select * from persons where first_name like '%fei%' or last_name like '%fei%'
+		 	String sqlName = "select * from persons where first_name like '%"+searchText+"%' or last_name like '%"+searchText+"%'";
+		 			
+		    try{
+		        findNameResult = conn.createStatement().executeQuery(sqlName);
+		    } catch(Exception ex){
+				out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
+		    }
+		    
+		    
+		    Integer testing = null;
+		    while(findNameResult != null && findNameResult.next()){
+	    		testing= new Integer(findNameResult.getInt(1));
+	    		
+	    		out.println("<hr><center>"+testing+"</center><hr>");
+	    		
+	    		String firstName = findNameResult.getString("first_name");
+	    		String lasstName = findNameResult.getString(3);
+	    		//didList.add(testing);
+	    		out.println("<hr><center>"+firstName+" "+lasstName+"</center><hr>");
+	    	} 
+		    rset = findNameResult;
+	    }
+	    else if (classType.equals("r")) {
+		 	getResult = "select person_id from users where user_name = '"+userName+"'";
+	    }
+	    else if (classType.equals("d")) {
+		 	getResult = "select person_id from users where user_name = '"+userName+"'";
+	    }
+	    else {
+	    	//select * from radiology_record rr, users u where u.user_name = 'xiaoran' and u.person_id = rr.patient_id;
+	    	getResult = "select * from radiology_record rr, users u where u.user_name = '"+userName+"' and u.person_id = rr.patient_id";              
+				    	
+	    }
+	    
+	    // try the different sql
+	    try{
+	        stmt = conn.createStatement();
+		    rset = stmt.executeQuery(getResult); 
+	    }  catch(Exception ex){
+			out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
+	    }
+	    
+	    
+
+	    
+	    
+	    
+	  
 	    
 	    
 	    
 	    
 	    
+	    
+	    
+	    // table body
     	while (rset.next()) {
     		recordID =  rset.getInt(1);
     		patientID = rset.getInt(2);
