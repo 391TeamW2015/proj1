@@ -9,6 +9,7 @@
 <%@page import = "java.io.*"%>
 <%@page import = "javax.servlet.*"%>
 <%@page import = "javax.servlet.http.*" %>
+
 <%!
 public String printRowInTable(Integer rec_id, Integer patient_id,
 		              Integer doc_id, Integer radio_id, String test_type,
@@ -30,7 +31,6 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
 }
 %>
 
-
 <% 
 	    out.println("<center>");
 	    
@@ -38,7 +38,7 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
 		String sqlname = (String)session.getAttribute("SQLUSERID");
 	    String sqlpwd =  (String)session.getAttribute("SQLPASSWD");
 	    
-	    String classType =  (String)session.getAttribute("classtype");
+	    String classType = (String)session.getAttribute("classtype");
 	    String userName =(String)session.getAttribute("USERID");
 	    
 	    //get input information
@@ -94,27 +94,22 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
 
 
 	    // set some initial value
-	    Integer personID = null;
-	    Integer patientID = null;
+	    //Integer personID = null;
+	    //Integer patientID = null;
 	    
-	    String From = "";
-	    String To = "";
-	    
-	    PreparedStatement pstmt = null;
+	    //String From = "";
+	    //String To = "";   
+	    //PreparedStatement pstmt = null;
 	 	Statement stmt = null;
 	 	ResultSet rset = null;
 	 	ResultSet findNameResult = null;
-
-	 			
-	 	//select person ID of this account
-	 	String rid = "select person_id from users where user_name = '"+userName+"'";
 	 	
+
 	 	//select * from persons where first_name like '%fei%' or last_name like '%fei%'
 	 	String sqlName = "select * from persons where first_name like '%"+searchText+"%' or last_name like '%"+searchText+"%'";
 	 			
 	    try{
-	        stmt = conn.createStatement();
-	        findNameResult = stmt.executeQuery(sqlName);
+	        findNameResult = conn.createStatement().executeQuery(sqlName);
 	    } catch(Exception ex){
 			out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
 	    }
@@ -139,11 +134,24 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
 		    
 	 	String getResult = "";
 
-	    
-	    
-	    
+		Integer recordID;
+		Integer patientID;
+		Integer doctorID;
+		Integer radiologistID;
+		String testType;
+	
+		String prescribingDdate;
+		String testDate;
+	
+		String diagnosis;
+		String description;
+		
+
+        //select * from radiology_record rr, persons p, users u where u.user_name like '%xiao%' and p.person_id = u.person_id and p.person_id = rr.patient_id;              
+
+
 	    if (classType.equals("a")) {
-		 	getResult = "select person_id from users where user_name = '"+userName+"'";
+		 	getResult = "select * from persons p, users u where u.user_name = '"+userName+"' and p.person_id = u.person_id";
 	    }
 	    else if (classType.equals("r")) {
 		 	getResult = "select person_id from users where user_name = '"+userName+"'";
@@ -152,28 +160,20 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
 		 	getResult = "select person_id from users where user_name = '"+userName+"'";
 	    }
 	    else {
-		 	getResult = "select person_id from users where user_name = '"+userName+"'";
+	    	//select * from radiology_record rr, users u where u.user_name = 'xiaoran' and u.person_id = rr.patient_id;
+	    	getResult = "select * from radiology_record rr, users u where u.user_name = 'liwen' and u.person_id = rr.patient_id";              
+				    	
 	    }
 	    
 	    // try the different sql
 	    try{
 	        stmt = conn.createStatement();
 		    rset = stmt.executeQuery(getResult); 
-
 	    }  catch(Exception ex){
 			out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
 	    }
 	    
-    	rset.next();
-    	//out.println("<hr><center>classType = "+ classType +" with ID = "+rset.getInt(1)+" </center><hr>");
 	    
-
-    	
-    	
-    	
-    	
-    	
-
 	    /*
 	    a patient can only view his/her own records; 
 	    a doctor can only view records of their patients; 
@@ -183,9 +183,8 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
 	    
 		try {			
 			// create a table to print result
-			out.println("<br><br><br><br><br><br>");
+			out.println("<br><br>");
 			out.println("<h2><b>Search Result</b></h2>");
-			
             out.println("<table border=1>");
             out.println("<tr>");
             out.println("<th>Record ID</th>");
@@ -204,7 +203,7 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
             out.println(printRowInTable(testing,1,2,3,"X-ray","X-ray","X-ray","X-ray","X-ray",102));
             
             String recid = "";
-        	out.println("</table>");
+        	//out.println("</table>");
 		} catch(Exception ex){	
 	        out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
 	    	out.println("<script language=javascript type=text/javascript>");
@@ -213,13 +212,52 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
 	        out.println("</div>");
 	        conn.rollback();
 	    }
+	    
+	    
+	    
+	    
+	    
+    	while (rset.next()) {
+    		recordID =  rset.getInt(1);
+    		patientID = rset.getInt(2);
+    		doctorID =  rset.getInt(3);
+    		radiologistID =  rset.getInt(4);
+    		testType = rset.getString(5);
+    	
+    		prescribingDdate = rset.getString(6);
+    		testDate = rset.getString(7);
+    	
+    		diagnosis = rset.getString(8);
+    		description = rset.getString(9);
+    	/*
+	    	out.println("<center> prescribinDdate = "+ prescribingDdate);
+	    	out.println("<center> testDate = "+ testDate);
+	    	
+	    	out.println("<center> diagnosis = "+ diagnosis);
+	    	out.println("<center> description = "+ description +" </center><hr>");
+	    	*/
+	    	out.println(printRowInTable(recordID,patientID,doctorID,
+	    			radiologistID,testType,prescribingDdate,testDate,diagnosis,description,10));
+	    	
+    	}
+    	out.println("</table>");
+	    
+	    
+	    
+	    
+	    
+	    
+
         	
         out.println("<BR>");
         
 		// create the back button and the link
         out.println("<form action='../view/search.html' METHOD='post'>");
         out.println("<input type='submit' name='search_back' value='Back'>");
-        out.println("<br><br><a href='userDocumentation.html' target='_blank'>Help</a></form>");
+        out.println("<br><br><a href='userDocumentation.html' target='_blank'>Help</a></form>");        		
+
+        
+        
 
 %>
 
