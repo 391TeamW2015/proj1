@@ -11,13 +11,20 @@
 <%@page import = "javax.servlet.http.*" %>
 <%!
 public String printRowInTable(Integer rec_id, Integer patient_id,
-		              Integer doc_id, Integer radio_id, String test_type){
+		              Integer doc_id, Integer radio_id, String test_type,
+		              String prsr_date, String test_date, String diagnos, String Description,
+		              Integer Rank){
 	String html = "<tr>";
 	html += "<th>"+rec_id+"</th>";
 	html += "<th>"+patient_id+"</th>";
 	html += "<th>"+doc_id+"</th>";
 	html += "<th>"+radio_id+"</th>";
 	html += "<th>"+test_type+"</th>";
+	html += "<th>"+prsr_date+"</th>";
+	html += "<th>"+test_date+"</th>";
+	html += "<th>"+diagnos+"</th>";
+	html += "<th>"+Description+"</th>";
+	html += "<th>"+Rank+"</th>";
 	html += "</tr>";
     return html;
 }
@@ -112,9 +119,10 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
 			out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
 	    }
 	    
+	    
+	    Integer testing = null;
 	    while(findNameResult != null && findNameResult.next()){
-    		Integer testing= new Integer(findNameResult.getInt(1));
-    		Integer nima = findNameResult.getInt(1);
+    		testing= new Integer(findNameResult.getInt(1));
     		
     		out.println("<hr><center>"+testing+"</center><hr>");
     		
@@ -127,7 +135,7 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
 	    
 		    
 		    
-		    
+		
 		    
 	 	String getResult = "";
 
@@ -193,9 +201,7 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
             out.println("<th>Medical Pictures</th>");
             out.println("</tr>");
             
-            Integer nima = 4;
-            Integer nima = findNameResult.getInt(1);
-            out.println(printRowInTable(nima,1,2,3,"X-ray"));
+            out.println(printRowInTable(testing,1,2,3,"X-ray","X-ray","X-ray","X-ray","X-ray",102));
             
             String recid = "";
         	out.println("</table>");
