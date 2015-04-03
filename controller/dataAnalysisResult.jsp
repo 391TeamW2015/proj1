@@ -11,12 +11,12 @@
         {			
 			String sqlname = (String)session.getAttribute("SQLUSERID");
 			String sqlpwd =  (String)session.getAttribute("SQLPASSWD");
-			String name1="";
-			String type="";
+			String name1="off";
+			String type="off";
 			
 			String year="off";
 			String month="off";
-			String week="on";
+			String week="off";
 	        
 			//get the user input from the login page
 	        try{
@@ -46,6 +46,9 @@
 	        out.println("<HTML><HEAD><TITLE>Data Analysis Result</TITLE></HEAD><BODY>");
 	        out.println("<div id='image' style='background: url(../theme.jpg) no-repeat; width: 100%; height: 100%; background-size: 100%;'>");
 	        out.println("<p><br><br><br><br><br><br></p>");
+	        
+	        //out.println("<p>"+name1+"</p>");
+	        //out.println("<p>"+type+"</p>");
 
 	        //establish the connection to the underlying database
         	Connection conn = null;
