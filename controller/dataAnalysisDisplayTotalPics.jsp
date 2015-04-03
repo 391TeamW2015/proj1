@@ -7,12 +7,11 @@
 
 <%@page import="java.sql.*" %>
 <% 
-	if(request.getParameter("go2") != null)
+	if(request.getParameter("go") != null)
         {			
 			String sqlname = (String)session.getAttribute("SQLUSERID");
 			String sqlpwd =  (String)session.getAttribute("SQLPASSWD");
-
-
+			
 	        //establish the connection to the underlying database
         	Connection conn = null;
 	
@@ -46,10 +45,7 @@
 	        ResultSet rset2 = null;
 	        
         	String sql = "select count(*) from pacs_images pp";
-        			//"select password from users where user_name = '"+userName+"'";
-        	//String type = "select class from users where user_name = '"+userName+"'";
-        	
-	        //out.println(sql);
+
         	try{
 	        	stmt = conn.createStatement();
 		        rset = stmt.executeQuery(sql);
@@ -59,18 +55,18 @@
 		        out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
         	}
 
-	        String output = "";
+	        String basecase = "";
         	while(rset != null && rset.next())
-	        	output = (rset.getString(1)).trim();
+	        	basecase = (rset.getString(1)).trim();
         		//out.println(basecase);
 			out.println("<HTML><HEAD><TITLE>Data Analysis</TITLE></HEAD><BODY>");
 			out.println("<div id='image' style='background: url(../theme.jpg) no-repeat; width: 100%; height: 100%; background-size: 100%;'>");
-			out.println("<br><br><br><br><br><br><br><br><H1><CENTER>Data Analysis</CENTER></H1><CENTER><P><CENTER>Please Check The Attributes You Want To Group By</CENTER></P>");
-			out.println("<br><FORM ACTION='afterdataAnalysis2.jsp' METHOD='post' ><table><tr><td><input type='checkbox' name='name1'></td><td>Name</td></tr><tr><td><input type='checkbox' name='type'></td><td>Test Type</td></tr>");
-			out.println("<tr><td><input type='checkbox' name='year'></td><td>Year</td></tr><tr><td><input type='checkbox' name='month'></td><td>Month</td></tr><tr><td><input type='checkbox' name='week'></td><td>Week</td></tr></table><br>");
-			out.println("<INPUT TYPE='submit' NAME='search2' VALUE='GO' style= 'width: 300; height: 30'></FORM>");
-			out.println("<FORM ACTION='../view/dataAnalysis.html' METHOD='post' ><INPUT TYPE='submit' VALUE='BACK' style= 'width: 300; height: 30'></FORM>");
-			out.println("<FORM ACTION='../view/administrator.html' METHOD='post' ><INPUT TYPE='submit' NAME='ad_back' VALUE='GO BACK TO ADMIN' style= 'width: 300; height: 30'><br><br><a href='../view/userDocumentation.html' target='_blank'>Need help?</a></FORM></div></BODY></HTML>");
+			out.println("<br><br><br><br><br><br><br><br><H1><CENTER>Data Analysis</CENTER></H1><CENTER><P></P>");
+			out.println("<br><br><p><b>Total number of pictures:"+basecase+"</b></p>");
+			
+			out.println("<br><br><h2><center>");
+			out.println("<FORM ACTION='../view/dataAnalysis.html' METHOD='post' ><INPUT TYPE='submit' VALUE='BACK' style= 'width: 150; height: 30'></FORM>");
+			out.println("</center></h2>");
            	try{
                 conn.close();
             }

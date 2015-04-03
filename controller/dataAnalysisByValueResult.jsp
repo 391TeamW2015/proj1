@@ -88,7 +88,7 @@
 	        	sql = "select count(*) from pacs_images";
 	        }
 	        else if (fname=="" && lname!="" || fname!="" && lname==""){
-	        	out.println("<p><CENTER>-----Please enter enter a complete name:</CENTER></p>");
+	        	out.println("<p><CENTER>-----Please enter enter a complete name:</CENTER></p><br>");
 	        	out.println("<p><CENTER>-----NUMBER OF ALL PICTURES:</CENTER></p>");
 	        	sql = "select count(*) from pacs_images";
 	        }
@@ -143,9 +143,9 @@
 	        	basecase = (rset.getString(1)).trim();
         	
         	out.println("<p><CENTER>RESULT IS:" +basecase+ " PICTURES</p></CENTER>");	
-        	out.println("<center><FORM ACTION='dataAnalisis2.jsp' METHOD='post' >");
-        	out.println("<INPUT TYPE='submit' NAME='go1' VALUE='Prescribe another one' style= 'width: 300; height: 30'></FORM></center>");
-			out.println("<center><FORM ACTION='../view/administrator.html' METHOD='post' ><INPUT TYPE='submit' NAME='ad_back' VALUE='GO BACK TO ADMIN' style= 'width: 300; height: 30'></FORM></center></div></BODY></HTML>");
+        	out.println("<br><center><FORM ACTION='dataAnalysisByValue.jsp' METHOD='post' >");
+        	out.println("<INPUT TYPE='submit' NAME='go1' VALUE='Do another Analysis' style= 'width: 300; height: 30'></FORM></center><br><br>");
+			out.println("<center><FORM ACTION='../view/dataAnalysis.html' METHOD='post' ><INPUT TYPE='submit' NAME='ad_back' VALUE='Back' style= 'width: 150; height: 30'></FORM></center></div></BODY></HTML>");
 			try{
                 conn.close();
             }

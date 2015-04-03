@@ -705,8 +705,8 @@
 
         		}
         	out.println("</table></center>");
-        	out.println("<center><FORM ACTION='dataAnalisis3.jsp' METHOD='post' >");
-        	out.println("<INPUT TYPE='submit' NAME='go2' VALUE='Prescribe another one' style= 'width: 500; height: 30'></FORM></center>");
+        	out.println("<center><FORM ACTION='dataAnalysisByAttribute.jsp' METHOD='post' >");
+        	out.println("<INPUT TYPE='submit' NAME='go2' VALUE='Prescribe Another One' style= 'width: 300; height: 30'></FORM></center>");
 			out.println("<center><FORM ACTION='../view/administrator.html' METHOD='post' ><INPUT TYPE='submit' NAME='ad_back' VALUE='GO BACK TO Administrator' style= 'width: 500; height: 30'></FORM></center></div></BODY></HTML>");	
         		
 			try{
