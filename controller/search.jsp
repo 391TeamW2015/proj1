@@ -15,19 +15,19 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
 		              Integer doc_id, Integer radio_id, String test_type,
 		              String prsr_date, String test_date, String diagnos, String Description,
 		              Integer Rank){
-	String html = "<tr>";
-	html += "<th>"+rec_id+"</th>";
-	html += "<th>"+patient_id+"</th>";
-	html += "<th>"+doc_id+"</th>";
-	html += "<th>"+radio_id+"</th>";
-	html += "<th>"+test_type+"</th>";
-	html += "<th>"+prsr_date+"</th>";
-	html += "<th>"+test_date+"</th>";
-	html += "<th>"+diagnos+"</th>";
-	html += "<th>"+Description+"</th>";
-	html += "<th>"+Rank+"</th>";
-	html += "</tr>";
-    return html;
+		String html = "<tr>";
+		html += "<th>"+rec_id+"</th>";
+		html += "<th>"+patient_id+"</th>";
+		html += "<th>"+doc_id+"</th>";
+		html += "<th>"+radio_id+"</th>";
+		html += "<th>"+test_type+"</th>";
+		html += "<th>"+prsr_date+"</th>";
+		html += "<th>"+test_date+"</th>";
+		html += "<th>"+diagnos+"</th>";
+		html += "<th>"+Description+"</th>";
+		html += "<th>"+Rank+"</th>";
+		html += "</tr>";
+	    return html;
 }
 %>
 
@@ -88,18 +88,7 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
 	    }
 	    
 	    
-	    
-	    
-	    
-
-
 	    // set some initial value
-	    //Integer personID = null;
-	    //Integer patientID = null;
-	    
-	    //String From = "";
-	    //String To = "";   
-	    //PreparedStatement pstmt = null;
 	 	Statement stmt = null;
 	 	ResultSet rset = null;
 	 	ResultSet findNameResult = null;
@@ -160,8 +149,10 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
 		 	getResult = "select person_id from users where user_name = '"+userName+"'";
 	    }
 	    else {
-	    	//select * from radiology_record rr, users u where u.user_name = 'xiaoran' and u.person_id = rr.patient_id;
-	    	getResult = "select * from radiology_record rr, users u where u.user_name = 'liwen' and u.person_id = rr.patient_id";              
+	    	//select * from radiology_record rr, users u, pacs_images pi where u.user_name = 'liwen' and u.person_id = rr.patient_id and rr.record_id = pi.record_id;
+	    	getResult = "select * from radiology_record rr, users u, pacs_images pi, persons p where u.user_name = 'liwen' and u.person_id = rr.patient_id and p.person_id = u.person_id and rr.record_id = pi.record_id and (rr.description like '%Chen%' or rr.test_type like '%Chen%' or rr.diagnosis like '%Chen%' or p.first_name like '%Chen%' or p.last_name like '%Chen%')";
+	    	
+	    	//getResult = "select * from radiology_record rr, users u where u.user_name like '%" + searchText +"'% and u.person_id = rr.patient_id";              
 				    	
 	    }
 	    
@@ -200,7 +191,7 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
             out.println("<th>Medical Pictures</th>");
             out.println("</tr>");
             
-            out.println(printRowInTable(testing,1,2,3,"X-ray","X-ray","X-ray","X-ray","X-ray",102));
+            //out.println(printRowInTable(testing,1,2,3,"X-ray","X-ray","X-ray","X-ray","X-ray",102));
             
             String recid = "";
         	//out.println("</table>");
@@ -240,16 +231,8 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
 	    			radiologistID,testType,prescribingDdate,testDate,diagnosis,description,10));
 	    	
     	}
-    	out.println("</table>");
-	    
-	    
-	    
-	    
-	    
-	    
+    	out.println("</table><BR>");
 
-        	
-        out.println("<BR>");
         
 		// create the back button and the link
         out.println("<form action='../view/search.html' METHOD='post'>");
