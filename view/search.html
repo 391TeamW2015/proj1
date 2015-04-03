@@ -1,50 +1,7 @@
 <HTML>
 <HEAD>
 <TITLE>Search</TITLE>
-<script type="text/javascript">
-function populate(year,month,date){
-	var year = document.getElementById(year);
-	var month = document.getElementById(month);
-	var date = document.getElementById(date);
-	
-	if(year.value=="NULL" || month.value=="NULL"){
-		return;
-	}
-	date.innerHTML = "";
-	
-	var isLeap = null;
-	if(year.value%4!=0){
-		isLeap = false;
-	} else if(year.value%100!=0) {
-		isLeap = true;
-	} else if(year.value%400!=0) {
-		isLeap = false;
-	} else {
-		isLeap = true;
-	}
-
-    var maxDate = null;
-	if (isLeap && month.value=="February"){
-		maxDate = 30;
-	} else if(month.value=="February") {
-		maxDate = 29;
-	} else if(month.value=="April" || 
-	          month.value=="June" ||
-	          month.value=="September" || 
-			  month.value=="November") {
-		maxDate = 31;
-	} else {
-		maxDate = 32;
-	}
-	
-	for(var i=1;i<maxDate;i++){
-		var newOption = document.createElement("option");
-		newOption.value = ""+i; 
-		newOption.innerHTML = ""+i;
-		date.options.add(newOption);
-	}
-}
-</script>
+<script type="text/javascript" src="../js/myCalender.js"></script>
 </HEAD>
 
 <BODY>
@@ -63,7 +20,7 @@ Search Content:
 <table>
 <tr>
 <td>From:</td>
-<td><select name="Year" id="year" onchange="populate(this.id,'month','date')">
+<select name="Year" id="year" onchange="populate(this.id,'month','date')" style= "width: 78; height: 22">
 <option value="NULL">Year</option>
 <script language="JavaScript">
    var i ;
@@ -74,7 +31,7 @@ Search Content:
 </script>
 </select>
 
-<select name="Month" id="month" onchange="populate('year',this.id,'date')">
+<select name="Month" id="month" onchange="populate('year',this.id,'date')" style= "width: 108; height: 22">
 <option value="NULL">Month</option>
 <option value="January">January</option>
 <option value="February">February</option>
@@ -90,17 +47,19 @@ Search Content:
 <option value="December">December</option>
 </select>
 
-<select name="Day" id="date" onload="populate('year','month',this.id)">
+<select name="Day" id="date" onload="populate('year','month',this.id)" style= "width: 68; height: 22">
 <option value="NULL">Day</option>
 </select>
 </td>
 </tr>
+
 <BR>
+
 <tr>
 <td>To:</td>
 <td>
 
-<select name="YEAR" id="toYear" onchange="populate('toYear','toMonth','toDate')">
+<select name="YEAR" id="toYear" onchange="populate('toYear','toMonth','toDate')" style= "width: 78; height: 22">
 <option value="NULL">Year</option>
 <script language="JavaScript">
    var i ;
@@ -111,7 +70,7 @@ Search Content:
 </script>
 </select>
 
-<select name="MONTH" id="toMonth" onchange="populate('toYear','toMonth','toDate')">
+<select name="MONTH" id="toMonth" onchange="populate('toYear','toMonth','toDate')" style= "width: 108; height: 22">
 <option value="NULL">Month</option>
 <option value="January">January</option>
 <option value="February">February</option>
@@ -127,7 +86,7 @@ Search Content:
 <option value="December">December</option>
 </select>
 
-<select name="DAY" id="toDate" onload="populate('toYear','toMonth','toDate')">
+<select name="DAY" id="toDate" onload="populate('toYear','toMonth','toDate')" style= "width: 68; height: 22">
 <option value="NULL">Day</option>
 </select>
 
@@ -148,6 +107,8 @@ Search Content:
 </table>
 
 </FORM>
+
+<br><br>
 
 <br><br><a href='userDocumentation.html' target='_blank'>Help</a>
 </div>
