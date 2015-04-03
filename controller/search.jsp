@@ -103,68 +103,6 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
 			out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
 	    }
 	    
-	    
-	    Integer testing = null;
-	    while(findNameResult != null && findNameResult.next()){
-    		testing= new Integer(findNameResult.getInt(1));
-    		
-    		out.println("<hr><center>"+testing+"</center><hr>");
-    		
-    		String firstName = findNameResult.getString("first_name");
-    		String lasstName = findNameResult.getString(3);
-    		//didList.add(testing);
-    		out.println("<hr><center>"+firstName+" "+lasstName+"</center><hr>");
-    	}
-
-	    
-		    
-		    
-		
-		    
-	 	String getResult = "";
-
-		Integer recordID;
-		Integer patientID;
-		Integer doctorID;
-		Integer radiologistID;
-		String testType;
-	
-		String prescribingDdate;
-		String testDate;
-	
-		String diagnosis;
-		String description;
-		
-
-        //select * from radiology_record rr, persons p, users u where u.user_name like '%xiao%' and p.person_id = u.person_id and p.person_id = rr.patient_id;              
-
-
-	    if (classType.equals("a")) {
-		 	getResult = "select * from persons p, users u where u.user_name = '"+userName+"' and p.person_id = u.person_id";
-	    }
-	    else if (classType.equals("r")) {
-		 	getResult = "select person_id from users where user_name = '"+userName+"'";
-	    }
-	    else if (classType.equals("d")) {
-		 	getResult = "select person_id from users where user_name = '"+userName+"'";
-	    }
-	    else {
-	    	//select * from radiology_record rr, users u, pacs_images pi where u.user_name = 'liwen' and u.person_id = rr.patient_id and rr.record_id = pi.record_id;
-	    	getResult = "select * from radiology_record rr, users u, pacs_images pi, persons p where u.user_name = 'liwen' and u.person_id = rr.patient_id and p.person_id = u.person_id and rr.record_id = pi.record_id and (rr.description like '%Chen%' or rr.test_type like '%Chen%' or rr.diagnosis like '%Chen%' or p.first_name like '%Chen%' or p.last_name like '%Chen%')";
-	    	
-	    	//getResult = "select * from radiology_record rr, users u where u.user_name like '%" + searchText +"'% and u.person_id = rr.patient_id";              
-				    	
-	    }
-	    
-	    // try the different sql
-	    try{
-	        stmt = conn.createStatement();
-		    rset = stmt.executeQuery(getResult); 
-	    }  catch(Exception ex){
-			out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
-	    }
-	    
-	    
 	    /*
 	    a patient can only view his/her own records; 
 	    a doctor can only view records of their patients; 
@@ -206,6 +144,54 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
 	    
 	    
 	    
+		//# star to build the table           
+	 	String getResult = "";
+
+		Integer recordID;
+		Integer patientID;
+		Integer doctorID;
+		Integer radiologistID;
+		String testType;
+	
+		String prescribingDdate;
+		String testDate;
+	
+		String diagnosis;
+		String description;
+		
+
+
+	    if (classType.equals("a")) {
+	    	// select * from radiology_record rr, users u, pacs_images pi, persons p where u.user_name = 'yufei' and u.person_id = p.person_id and rr.record_id = pi.record_id and (rr.description like '%dd%' or rr.test_type like '%dd%' or rr.diagnosis like '%dd%' or p.first_name like '%"dd"%' or p.last_name like '%"dd"%' or u.user_name like '%dd%');
+		 	getResult = "select * from radiology_record rr, users u, pacs_images pi, persons p where u.user_name = '"+userName+"' and u.person_id = p.person_id and rr.record_id = pi.record_id and (rr.description like '%"+searchText+"%' or rr.test_type like '%"+searchText+"%' or rr.diagnosis like '%"+searchText+"%' or p.first_name like '%"+searchText+"%' or p.last_name like '%"+searchText+"%' or u.user_name like '%"+searchText+"%')";
+	    }
+	    else if (classType.equals("r")) {
+	    	// select * from radiology_record rr, users u, pacs_images pi, persons p where u.user_name = 'jyang' and u.person_id = rr.radiologist_id and rr.radiologist_id = p.person_id and rr.record_id = pi.record_id and (rr.description like '%dd%' or rr.test_type like '%dd%' or rr.diagnosis like '%dd%' or p.first_name like '%"dd"%' or p.last_name like '%"dd"%' or u.user_name like '%dd%');
+		 	getResult = "select * from radiology_record rr, users u, pacs_images pi, persons p where u.user_name = '"+userName+"' and u.person_id = rr.radiologist_id and rr.radiologist_id = p.person_id and rr.record_id = pi.record_id and (rr.description like '%"+searchText+"%' or rr.test_type like '%"+searchText+"%' or rr.diagnosis like '%"+searchText+"%' or p.first_name like '%"+searchText+"%' or p.last_name like '%"+searchText+"%' or u.user_name like '%"+searchText+"%')";
+	    }
+	    else if (classType.equals("d")) {
+	    	// select * from radiology_record rr, users u, pacs_images pi, persons p where u.user_name = 'gunge' and u.person_id = rr.doctor_id and rr.doctor_id = p.person_id and rr.record_id = pi.record_id and (rr.description like '%gun%' or rr.test_type like '%gun%' or rr.diagnosis like '%gun%' or p.first_name like '%"gun"%' or p.last_name like '%"gun"%' or u.user_name like '%gun%');
+
+		 	getResult = "select * from radiology_record rr, users u, pacs_images pi, persons p where u.user_name = '"+userName+"' and u.person_id = rr.doctor_id and rr.doctor_id = p.person_id and rr.record_id = pi.record_id and (rr.description like '%"+searchText+"%' or rr.test_type like '%"+searchText+"%' or rr.diagnosis like '%"+searchText+"%' or p.first_name like '%"+searchText+"%' or p.last_name like '%"+searchText+"%' or u.user_name like '%"+searchText+"%')";
+	    }
+	    else {
+	    	getResult = "select * from radiology_record rr, users u, pacs_images pi, persons p where u.user_name = '"+ userName +"' and u.person_id = rr.patient_id and p.person_id = u.person_id and rr.record_id = pi.record_id and (rr.description like '%"+searchText+"%' or rr.test_type like '%"+searchText+"%' or rr.diagnosis like '%"+searchText+"%' or p.first_name like '%"+searchText+"%' or p.last_name like '%"+searchText+"%' or u.user_name like '%"+ searchText +"%')";
+				    	
+	    }
+	    
+	    // try the different sql
+	    try{
+	        stmt = conn.createStatement();
+		    rset = stmt.executeQuery(getResult); 
+	    }  catch(Exception ex){
+			out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
+	    }
+	    
+	    
+
+	    
+	    
+	    
 	    
 	    
     	while (rset.next()) {
@@ -229,6 +215,9 @@ public String printRowInTable(Integer rec_id, Integer patient_id,
 	    	*/
 	    	out.println(printRowInTable(recordID,patientID,doctorID,
 	    			radiologistID,testType,prescribingDdate,testDate,diagnosis,description,10));
+            out.println("<td>"); 
+			out.println("<a href=\"PictureBrowse?"+"2"+"\" target='_blank'>Pictures</a>");								
+            out.println("</td>");
 	    	
     	}
     	out.println("</table><BR>");
