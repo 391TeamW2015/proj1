@@ -3,19 +3,19 @@
 
 <%@page import="java.sql.*" %>
 <% 
-		String classtype =  (String)session.getAttribute("classtype");
-		out.println("<div style='background: url(10.jpg) no-repeat; width: 100%; height: 100%; background-size: 100%;'>");
-		out.println("<script language=javascript type=text/javascript>");
-		if (classtype.equals("a"))
-			out.println("setTimeout("+"\"javascript:location.href='admin.html'\""+", 0);");
-		else if (classtype.equals("d"))
-			out.println("setTimeout("+"\"javascript:location.href='doctor.html'\""+", 0);");
-		else if (classtype.equals("r"))
-			out.println("setTimeout("+"\"javascript:location.href='radiologist.html'\""+", 0);");
-		else if (classtype.equals("p"))
-			out.println("setTimeout("+"\"javascript:location.href='patient.html'\""+", 0);");
-		out.println("</script></div>");
-
+		if(request.getParameter("LogOut") != null)
+        {
+			//delete the attributes
+			session.setAttribute("SQLUSERID",null);
+			session.setAttribute("SQLPASSWD",null);
+			Boolean isOracleLogin = false;
+			session.setAttribute("isOracleLogin",isOracleLogin);
+					
+			out.println("<center><br><br><br><br><br><br><hr><h1>User logged out. </h1></center><hr>");;
+			out.println("<script language=javascript type=text/javascript>");
+			out.println("setTimeout("+"\"javascript:location.href='../login.html'\""+", 2500);");
+		    out.println("</script>");
+        }
 %>
 
 
