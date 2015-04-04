@@ -45,6 +45,8 @@
 		    	From= "1-January-"+Year;
 		    if ((!year.equals("NULL")) && (month.equals("NULL")) && (day.equals("NULL")))
 		    	To= "31-December-"+year;
+		    
+		    
 			if (((Year.equals("NULL")) && (!Month.equals("NULL")) && (!Day.equals("NULL"))) || 
 				((Year.equals("NULL")) && (Month.equals("NULL")) && (!Day.equals("NULL")))  ||
 				((year.equals("NULL")) && (!month.equals("NULL")) && (!day.equals("NULL"))) ||
@@ -58,15 +60,18 @@
 		    	out.println("</script>");
 			}
 			else{
+				String useful = search_text;
 				//if user do not provide search context, return bad response
 			    if (search_text.equals("")){
-			    	out.println("<br><br>");
+			    	/* out.println("<br><br>");
 			    	out.println("<p><h2>please provide search content!</h2></p>");
 			    	out.println("<script language=javascript type=text/javascript>");
 			    	out.println("setTimeout("+"\"javascript:location.href='./view/search.html'\""+", 2500);");
-			    	out.println("</script>");
+			    	out.println("</script>"); */
+			    	search_text = "abcdefghijklmnopqrstuvwxyz";
 			    }
-			    else{
+			    
+			    //else{ 
 			    	//list for storage
 				    ArrayList<Integer> idList = new ArrayList<Integer>();   	
 			        ArrayList<String> nameList = new ArrayList<String>();
@@ -89,18 +94,15 @@
 		   		        //load and register the driver
 		           		Class drvClass = Class.forName(driverName); 
 		   	        	DriverManager.registerDriver((Driver) drvClass.newInstance());
-		           	}
-		   	        catch(Exception ex){
+		           	} catch(Exception ex){
 		   		        out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
-		   	
 		   	        }
 			
 		        	try{
 			        	//establish the connection 
 				        conn = DriverManager.getConnection(dbstring,sqlname,sqlpwd);
 		        		conn.setAutoCommit(false);
-			        }
-		        	catch(Exception ex){
+			        } catch(Exception ex){
 				        out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
 		        	}
 			
@@ -461,8 +463,14 @@
 		        			//if the user is admin, print all result
 			        		if (classtype.equals("a")){
 				        		if ((!From.equals("")) && (!To.equals(""))){
+				        			if (useful.equals("")){
+				        				doSearch=conn.prepareStatement("select * from radiology_record rr where rr.test_date between '"+From+"' and '"+To+"' order by rr.test_date desc");
+				        			}
+				        			else {
+				        				//out.println("<tr>I am in the right plase</tr>");
 				        				doSearch=conn.prepareStatement("SELECT distinct record_id,patient_id,doctor_id,radiologist_id,test_type,P_date,t_date,diagnosis, description, Rank FROM resultSet "
 				        						+"where t_date between '"+From+"' and '"+To+"' order by Rank desc");
+				        			}
 				        		}
 				        		else{
 				      				doSearch=conn.prepareStatement("SELECT distinct record_id,patient_id,doctor_id,radiologist_id,test_type,P_date,t_date,diagnosis, description, Rank FROM resultSet order by Rank desc");
@@ -524,7 +532,9 @@
 				                out.println(rset4.getString(9));
 				                out.println("</td>");
 				                out.println("<td>"); 
-				                out.println(rset4.getString(10));
+				                if (!useful.equals("")) {
+				                	out.println(rset4.getString(10));
+				                }
 				                out.println("</td>");
 				                out.println("<td>"); 
 				                out.println("<a href=\"PictureBrowse?" + recid + "\">");
@@ -585,7 +595,7 @@
 		                    out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
 			        
 		        	}
-			    }
+			    //}
 		    }
         }
 	else{
