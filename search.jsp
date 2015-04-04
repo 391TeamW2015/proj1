@@ -112,6 +112,11 @@
 		 			
 		        	try{
 		        		stmt = conn.createStatement();
+		        		
+		        		// create index for index
+		        		conn.createStatement().executeQuery("CREATE INDEX myindex3 ON radiology_record(diagnosis) INDEXTYPE IS CTXSYS.CONTEXT");
+		        		conn.createStatement().executeQuery("CREATE INDEX myindex4 ON radiology_record(description) INDEXTYPE IS CTXSYS.CONTEXT");
+		        				
 			        	rset = stmt.executeQuery(rid); 
 		        	}
 			
@@ -523,6 +528,11 @@
 							String droptable2 = "DROP TABLE resultSet";
 							stmt.executeQuery(droptable);
 							stmt.executeQuery(droptable2);
+							
+							// delete index after search
+							conn.createStatement().executeQuery("drop INDEX myindex3");
+		        		    conn.createStatement().executeQuery("drop INDEX myindex4");
+		        		
 		                    conn.close();
 		            }
 		            catch(Exception ex){
