@@ -112,6 +112,10 @@
 		 			
 		        	try{
 		        		stmt = conn.createStatement();
+		        		// create index for searching
+		        		stmt.executeQuery("CREATE INDEX myindex3 ON radiology_record(diagnosis) INDEXTYPE IS CTXSYS.CONTEXT");
+		        		stmt.executeQuery("CREATE INDEX myindex4 ON radiology_record(description) INDEXTYPE IS CTXSYS.CONTEXT");
+		        		
 			        	rset = stmt.executeQuery(rid); 
 		        	}
 			
@@ -521,6 +525,11 @@
 							String droptable2 = "DROP TABLE resultSet";
 							stmt.executeQuery(droptable);
 							stmt.executeQuery(droptable2);
+							
+							//drop the index after search
+							stmt.executeQuery("drop index myindex3");
+		        			stmt.executeQuery("drop index myindex4");
+		        		
 		                    conn.close();
 		            }
 		            catch(Exception ex){
@@ -534,7 +543,7 @@
 		if ((Boolean)session.getAttribute("isOracleLogin")){
 			out.println("<br><br><br><br><br><p><CENTER><b><b><b><h1>You didn't login RIS!</h1></b><b><b></CENTER></p>");
 			out.println("<script language=javascript type=text/javascript>");
-			out.println("setTimeout("+"\"javascript:location.href='../index.html'\""+", 2500);");
+			out.println("setTimeout("+"\"javascript:location.href='../view/login.html'\""+", 2500);");
 			out.println("</script>");
 		}
 		
