@@ -154,7 +154,7 @@
 			out.println("<center><b>Can't upload file other than jpg!</b></center>");
 			out.println("</div></BODY></HTML>");
 	        out.println("<script language=javascript type=text/javascript>");
-	    	out.println("setTimeout("+"\"javascript:location.href='../view/uploadImg.html'\""+", 3000);");
+	    	out.println("setTimeout("+"\"javascript:location.href='../view/radiologist.html'\""+", 3000);");
 	    	out.println("</script></div>"); 
 	} else {
 		if ((Boolean)session.getAttribute("isOracleLogin")){
