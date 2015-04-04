@@ -483,16 +483,7 @@
 				        	while(rset4.next())
 				              {	
 				        		recid = rset4.getString(1);
-				        		// find image id
-				        		getPicIdSql = "select image_id from pacs_images "+
-			        					"where record_id ="+ recid;
-			        			picidResult = conn.createStatement().executeQuery(getPicIdSql);
-			        			if(picidResult.next()){
-			        				picid = picidResult.getString(1);
-			        			} else {
-			        				picid = "";
-			        			}
-			        			
+				        		
 				                out.println("<tr>");
 				                out.println("<td>"); 
 				                out.println(rset4.getString(1));
@@ -525,7 +516,24 @@
 				                out.println(rset4.getString(10));
 				                out.println("</td>");
 				                out.println("<td>"); 
-				                out.println("<a href=\"PictureBrowse?" + recid + "\"><img src=\"GetOnePic?" + picid +"\" style=\"display:block; width:100px; height:auto;\"></a>");
+				                out.println("<a href=\"PictureBrowse?" + recid + "\">");
+				             // find image id
+				        		getPicIdSql = "select image_id from pacs_images "+
+			        					"where record_id ="+ recid;
+			        			picidResult = conn.createStatement().executeQuery(getPicIdSql);
+			        			if (picidResult.next()){
+			        				picidResult = conn.createStatement().executeQuery(getPicIdSql);
+			        				while (picidResult.next()){
+			        					picid = picidResult.getString(1);
+			        					out.println("<img src=\"GetOnePic?" + picid +"\" style=\"display:block; width:100px; height:auto;\">");
+			        				} 
+			        			} else {
+			        				picid = "";
+			        				out.println("<img src=\"GetOnePic?" + picid +"\" style=\"display:block; width:100px; height:auto;\">");
+			        			} 
+			        			out.println("</a>");
+			        			
+				                //out.println("<a href=\"PictureBrowse?" + recid + "\"><img src=\"GetOnePic?" + picid +"\" style=\"display:block; width:100px; height:auto;\"></a>");
 				                //out.println("<a href=\"GetOnePic?" + recid + "\"><img src=\"GetOnePic?" + recid +"\" style=\"display:block; width:100px; height:auto;\"></a>");
 								//out.println("<a href=\"PictureBrowse?"+recid+"\" target='_blank'>Pictures</a>");
 								//out.println("<center><FORM ACTION='view/administrator.html' METHOD='post' ><INPUT TYPE='submit' NAME='ad_back' VALUE='Back' style= 'width: 150; height: 30'></FORM></center></div></BODY></HTML>");	
