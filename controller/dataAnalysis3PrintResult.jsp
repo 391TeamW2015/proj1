@@ -439,10 +439,10 @@
           if (year!="off") {
         	  
       		out.println("<table><br><td><center><FORM ACTION='dataAnalysis2GetResult.jsp' METHOD='post'>");
-      		out.println("<INPUT TYPE='submit' NAME='upDown' VALUE='Up' style= 'width: 100; height: 30'></FORM></center></td>");
+      		out.println("<INPUT TYPE='submit' NAME='upDown' VALUE='Roll Up' style= 'width: 100; height: 30'></FORM></center></td>");
 
       		out.println("<td><center><FORM ACTION='dataAnalysis2GetResult.jsp' METHOD='post'>");
-      		out.println("<INPUT TYPE='submit' NAME='upDown' VALUE='Down' style= 'width: 100; height: 30'></FORM></center></td></table><br><br>");
+      		out.println("<INPUT TYPE='submit' NAME='upDown' VALUE='Drill Down' style= 'width: 100; height: 30'></FORM></center></td></table><br><br>");
           }
       	out.println("</table></center>");
       	out.println("<center><FORM ACTION='dataAnalysis.jsp' METHOD='post'><br><br>");

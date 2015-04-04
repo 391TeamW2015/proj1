@@ -26,7 +26,7 @@
     out.println("<HTML><HEAD><TITLE>Data Analysis Result</TITLE></HEAD><BODY>");
     out.println("<div id='image' style='background: url(../theme.jpg) no-repeat; width: 100%; height: 100%; background-size: 100%;'>");
     
-	if (upDown.equals("Up")) {
+	if (upDown.equals("Roll Up")) {
 		if (week.equals("on")) {
 			week = "off";
 		}
@@ -34,7 +34,7 @@
 			month = "off";
 		}
 	}
-	else if (upDown.equals("Down")) {
+	else if (upDown.equals("Drill Down")) {
 		if (year.equals("on") && month.equals("off")) {
 			month = "on";
 		}
