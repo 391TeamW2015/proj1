@@ -14,6 +14,7 @@
 	        //get the user input from the login page	
 	    	String sqlname = (request.getParameter("SQLUSERID")).trim();
 			String sqlpwd  = (request.getParameter("SQLPASSWD")).trim();
+			
 			Boolean isOracleLogin = false;
 			
 			//setAttribute for later use
