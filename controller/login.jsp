@@ -20,6 +20,8 @@
 	        
 	        //set attributes
 	        session.setAttribute("USERID",userName);
+	        Boolean isUserLogin = false;
+	        session.setAttribute("isUserLogin",isUserLogin);
 	        
 		    //establish the connection to the underlying database
 	        Connection conn = null;
@@ -83,6 +85,9 @@
 	        		
 	        //display the result
 		    if(passwd.equals(truepwd)){
+		    	Boolean isUserLogin = true;
+		        session.setAttribute("isUserLogin",isUserLogin);
+		        
 			    out.println("<p><CENTER>Your Login Successful!</p>");
 			    out.println("Click the button to continue.");
 			        
