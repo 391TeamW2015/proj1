@@ -99,20 +99,12 @@
 	        		pstmt = conn.prepareStatement("insert into persons (person_id, first_name,last_name,address,email,phone)"
 	        				  +"VALUES(?, ?, ?, ?, ?, ?)");
 	      			pstmt.setInt(1, personID);
-	      			out.println("<hr><center>" + personID + "</center><hr>");
 	      			pstmt.setString(2, firstName);
-	      			out.println("<hr><center>" + firstName + "</center><hr>");
 	      			pstmt.setString(3, lastName);
-	      			out.println("<hr><center>" + lastName + "</center><hr>");
 	      			pstmt.setString(4, address);
-	      			out.println("<hr><center>" + address + "</center><hr>");
 	      			pstmt.setString(5, email );
-	      			out.println("<hr><center>" + email + "</center><hr>");
 	      			pstmt.setString(6, phone );
-	      			out.println("<hr><center>" + phone + "</center><hr>");
-	      			
 			    	pstmt.executeQuery();
-			    	out.println("<hr><center>" + "cao!!!!!! 7" + "</center><hr>");
 	
 			    	out.println("<div style='background: url(../theme.jpg) no-repeat; width: 100%; height: 100%; background-size: 100%;'>");
 			    	out.println("<BR><p><CENTER><b>Insert Successful!</b></CENTER></p>");

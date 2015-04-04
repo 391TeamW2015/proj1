@@ -16,11 +16,6 @@
 			//get the user input from the login page
 			String patientId=  (request.getParameter("patientList")).trim();
 			Integer patientID =  Integer.parseInt(patientId);
-			/* while(patientID == -1){
-				//alert("Must select a patient!\n");
-				patientId =  (request.getParameter("patientList")).trim();
-				patientID =  Integer.parseInt(patientId);
-			} */
 			
 			String doctorId =  (request.getParameter("doctorList")).trim();
 	        
@@ -34,21 +29,11 @@
         	java.util.Date myDate = new java.util.Date();
 	        java.sql.Date sqlDate = new java.sql.Date(myDate.getTime());
 	        
-	        /*
-        	out.println("<p><CENTER>sqlname = "+sqlname+"</CENTER></p>");
-        	out.println("<p><CENTER>sqlpswd = "+sqlpwd+"</CENTER></p>");
-        	out.println("<p><CENTER>rid = "+rid+"</CENTER></p>");
-	       */
 	       
 	        
         	out.println("<p><CENTER>patientId = "+patientId+"</CENTER></p>");
         	out.println("<p><CENTER>doctorId = "+doctorId+"</CENTER></p>");
-        	/*
-        	out.println("<p><CENTER>testType = "+testType+"</CENTER></p>");
-        	out.println("<p><CENTER>diagnosis = "+diagnosis+"</CENTER></p>");
-        	out.println("<p><CENTER>description = "+description+"</CENTER></p>");
-        	out.println("<p><CENTER>sqlDate = "+sqlDate+"</CENTER></p>");
-        	*/
+
 	        
 	        //establish the connection to the underlying database
         	Connection conn = null;
@@ -81,16 +66,10 @@
 	        //insert into radiology_record
         	try{
         		stmt = conn.createStatement();
-        		//out.println("<p><CENTER>1 "+ "I am in this line" +"</CENTER></p>");
-	    	    rset = stmt.executeQuery("select count(*) from radiology_record"); // I need to select how many a
-	    	    //out.println("<p><CENTER>2 "+ "I am in this line" +"</CENTER></p>");
+	    	    rset = stmt.executeQuery("select count(*) from radiology_record");
 	    	    rset.next();
-	    	    //out.println("<p><CENTER>3 "+ "I am in this line" +"</CENTER></p>");
-	    	    rec_id = rset.getInt(1)+1;
-	    	    //out.println("<p><CENTER>4 "+ "I am in this line" +"</CENTER></p>");
-	    	    
+	    	    rec_id = rset.getInt(1)+1;    	    
 	    	    session.setAttribute("rec_id",rec_id);
-	    	    out.println("<p><CENTER>rec_id: "+rec_id+"</CENTER></p>");
 	    	    
         		pstmt = conn.prepareStatement("INSERT INTO radiology_record (record_id,patient_id,doctor_id,radiologist_id,test_type,prescribing_date,test_date,diagnosis,description)"
         				  +"VALUES(?, ?, ?, ?, ?, ?, ?, ?, ?)");
@@ -114,18 +93,12 @@
         	}
 
 	        catch(Exception ex){
-	        	//out.println("<div style='background: url(theme.jpg) no-repeat; width: 100%; height: 100%; background-size: 100%;'>");
-	        	//out.println("<BR><p><CENTER>Insert Failed!</CENTER></p><br><br>");
 		        if ((ex.getMessage()).length() > 100) {
 		        	out.println("<hr><center>" + (ex.getMessage()).substring(11,12+48) + "</center><hr>");
 		        }
 	        	else {
 	        		out.println("<hr><center>" + ex.getMessage() + "</center><hr>"); 
 	        	}
-		    	//out.println("<script language=javascript type=text/javascript>");
-		    	//out.println("setTimeout("+"\"javascript:location.href='uploadRecord.jsp'\""+", 2500);");
-		    	//out.println("</script>");
-		        //out.println("</div>");
 		        conn.rollback();
             }
             try{

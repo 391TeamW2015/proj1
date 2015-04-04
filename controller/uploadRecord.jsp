@@ -257,20 +257,8 @@ if(((Boolean)session.getAttribute("isOracleLogin")) && ((Boolean)session.getAttr
 			out.println("<tr><td ALIGN=CENTER COLSPAN=2><br><brs><input type='submit' name='.submit' value='Upload Medical Images'></td></tr></table></H2>");
 			
 			out.println("<H3><Center></FORM><br><br><br>");
-			
-			// the alert window part
-			/* out.println("<script type='text/javascript' src='../js/uploadingValidate.js'></script>");
-			out.println("<script type='text/javascript'>");
-			out.println("validate();");
-			out.println("</script>"); */
-			 
-			 
+		
 			out.println("<FORM ACTION='../view/radiologist.html' METHOD='post'>");
-			
-			/* out.println("<script type='text/javascript' src='../js/uploadingValidate.js'></script>");
-			out.println("<script type='text/javascript'>");
-			out.println("onSubmit = validate();");
-			out.println("</script> >");  */
 			
 			out.println("<INPUT TYPE='submit' NAME='ra_back' VALUE='Back'>");
 			

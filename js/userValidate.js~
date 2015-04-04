@@ -2,7 +2,7 @@ function validate()
 {
    if (( document.newUserRegistration.personid.value != parseInt(document.newUserRegistration.personid.value) ))
    {
-     alert( "Person ID Should Be Integers!" );
+     alert( "Please provide valid Person ID!" );
      document.newUserRegistration.personid.focus() ;
      return false;
    }
