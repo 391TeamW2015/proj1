@@ -389,7 +389,7 @@
 		        			for(int h = 0; h < size; h++){
 				        		if ((!From.equals("")) && (!To.equals(""))){
 				        				doSearch=conn.prepareStatement("SELECT distinct record_id,patient_id,doctor_id,radiologist_id,test_type,P_date,t_date,diagnosis, description, Rank FROM resultSet "
-				        						+"where patient_id = "+patientList.get(h)+" and t_date between '"+From+"' and '"+To+"' order by Rank desc");
+				        						+"where doctor_id = "+patientList.get(h)+" and t_date between '"+From+"' and '"+To+"' order by Rank desc");
 				        		}
 				        		else{
 				      				doSearch=conn.prepareStatement("SELECT distinct record_id,patient_id,doctor_id,radiologist_id,test_type,P_date,t_date,diagnosis, description, Rank FROM resultSet where patient_id = "+patientList.get(h)+" order by Rank desc");
