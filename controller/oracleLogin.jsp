@@ -14,10 +14,12 @@
 	        //get the user input from the login page	
 	    	String sqlname = (request.getParameter("SQLUSERID")).trim();
 			String sqlpwd  = (request.getParameter("SQLPASSWD")).trim();
+			Boolean isOracleLogin = false;
 			
 			//setAttribute for later use
 			session.setAttribute("SQLUSERID",sqlname);
 			session.setAttribute("SQLPASSWD",sqlpwd);
+			session.setAttribute("isOracleLogin",isOracleLogin);
 					
 
 		    //establish the connection to the underlying database
@@ -44,12 +46,21 @@
 			    out.println("<script language=javascript type=text/javascript>");
 			    out.println("setTimeout("+"\"javascript:location.href='../view/login.html'\""+", 0);");
 			    out.println("</script>");
+			    
+			    // if successfully login database
+			    isOracleLogin = true;
+			    session.setAttribute("isOracleLogin",isOracleLogin);
 		    }
 	        catch(Exception ex){
 			    out.println("<hr><center>" + (ex.getMessage()).substring(11) + "</center><hr>");;
 			    out.println("<script language=javascript type=text/javascript>");
 			    out.println("setTimeout("+"\"javascript:location.href='../index.html'\""+", 2500);");
 			    out.println("</script>");
+			    
+			    // if unsuccessfully login database
+			    isOracleLogin = false;
+			    session.setAttribute("isOracleLogin",isOracleLogin);
+			    
 	        }
         }
 %>
