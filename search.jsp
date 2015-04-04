@@ -20,6 +20,7 @@
 		    String classtype =  (String)session.getAttribute("classtype");
 		    String userName =(String)session.getAttribute("USERID");
 		    
+		    
 		    //get input information
 		    String search_text = (request.getParameter("searchContent")).trim();
 
@@ -33,6 +34,7 @@
 		    Integer patient_ID = null;
 		    String From = "";
 		    String To = "";
+		    String getPicIdSql = "";
 		    
 		    //add the date string togeher and if use do not give valid info, return bad response
 		    if ((!Year.equals("NULL")) && (!Month.equals("NULL")) && (!Day.equals("NULL")))
@@ -106,6 +108,7 @@
 		        	PreparedStatement pstmt = null;
 		 			Statement stmt = null;
 		 			ResultSet rset = null;
+		 			ResultSet picidResult = null;
 		 			
 		 			//select person ID of this account
 		 			String rid = "select person_id from users where user_name = '"+userName+"'";
@@ -362,6 +365,7 @@
 		                out.println("<th>Medical Pictures</th>");
 		                out.println("</tr>");
 		                String recid = "";
+		                String picid = "";
 		                
 		                //select distinct record from new table
 		      			doSearch=conn.prepareStatement("SELECT distinct record_id FROM resultSet");
@@ -380,6 +384,8 @@
 		        		//if the user is a doctor, print result of his patients
 		        		if (classtype.equals("d")){
 		        			int size = patientList.size();
+		        			
+		        			
 		        			for(int h = 0; h < size; h++){
 				        		if ((!From.equals("")) && (!To.equals(""))){
 				        				doSearch=conn.prepareStatement("SELECT distinct record_id,patient_id,doctor_id,radiologist_id,test_type,P_date,t_date,diagnosis, description, Rank FROM resultSet "
@@ -392,6 +398,16 @@
 					        	while(rset4.next())
 					              {
 					        		recid = rset4.getString(1);
+					        		// find image id
+					        		getPicIdSql = "select image_id from pacs_images "+
+				        					"where record_id ="+ recid;
+				        			picidResult = conn.createStatement().executeQuery(getPicIdSql);
+				        			if(picidResult.next()){
+				        				picid = picidResult.getString(1);
+				        			} else {
+				        				picid = "";
+				        			}
+				        			
 					                out.println("<tr>");
 					                out.println("<td>"); 
 					                out.println(rset4.getString(1));
@@ -424,7 +440,7 @@
 					                out.println(rset4.getString(10));
 					                out.println("</td>");
 					                out.println("<td>"); 
-					                out.println("<a href=\"PictureBrowse?" + recid + "\"><img src=\"GetOnePic?" + recid +"\" style=\"display:block; width:100px; height:auto;\"></a>");	
+					                out.println("<a href=\"PictureBrowse?" + recid + "\"><img src=\"GetOnePic?" + picid +"\" style=\"display:block; width:100px; height:auto;\"></a>");	
 					                out.println("</td>");
 					                out.println("</tr>");
 					              }
@@ -462,11 +478,21 @@
 				        		}
 			        		}
 			        		
-		        			//print all informaion
+		        			//print all informaion		
 			        		rset4 = doSearch.executeQuery();
 				        	while(rset4.next())
 				              {	
 				        		recid = rset4.getString(1);
+				        		// find image id
+				        		getPicIdSql = "select image_id from pacs_images "+
+			        					"where record_id ="+ recid;
+			        			picidResult = conn.createStatement().executeQuery(getPicIdSql);
+			        			if(picidResult.next()){
+			        				picid = picidResult.getString(1);
+			        			} else {
+			        				picid = "";
+			        			}
+			        			
 				                out.println("<tr>");
 				                out.println("<td>"); 
 				                out.println(rset4.getString(1));
@@ -499,7 +525,7 @@
 				                out.println(rset4.getString(10));
 				                out.println("</td>");
 				                out.println("<td>"); 
-				                out.println("<a href=\"PictureBrowse?" + recid + "\"><img src=\"GetOnePic?" + recid +"\" style=\"display:block; width:100px; height:auto;\"></a>");
+				                out.println("<a href=\"PictureBrowse?" + recid + "\"><img src=\"GetOnePic?" + picid +"\" style=\"display:block; width:100px; height:auto;\"></a>");
 				                //out.println("<a href=\"GetOnePic?" + recid + "\"><img src=\"GetOnePic?" + recid +"\" style=\"display:block; width:100px; height:auto;\"></a>");
 								//out.println("<a href=\"PictureBrowse?"+recid+"\" target='_blank'>Pictures</a>");
 								//out.println("<center><FORM ACTION='view/administrator.html' METHOD='post' ><INPUT TYPE='submit' NAME='ad_back' VALUE='Back' style= 'width: 150; height: 30'></FORM></center></div></BODY></HTML>");	
