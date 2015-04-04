@@ -10,7 +10,7 @@
 <%@page import = "javax.servlet.*"%>
 <%@page import = "javax.servlet.http.*" %><% 
 
-	if(request.getParameter("search") != null)
+	if(request.getParameter("search") != null && ((Boolean)session.getAttribute("isOracleLogin")) && ((Boolean)session.getAttribute("isUserLogin")))
         {			
 		    out.println("<center>");
 		    
@@ -530,6 +530,21 @@
 			    }
 		    }
         }
+	else{
+		if ((Boolean)session.getAttribute("isOracleLogin")){
+			out.println("<br><br><br><br><br><p><CENTER><b><b><b><h1>You didn't login RIS!</h1></b><b><b></CENTER></p>");
+			out.println("<script language=javascript type=text/javascript>");
+			out.println("setTimeout("+"\"javascript:location.href='../index.html'\""+", 2500);");
+			out.println("</script>");
+		}
+		
+		else{
+			out.println("<br><br><br><br><br><p><CENTER><b><b><b><h1>You didn't login the oracle database!</h1></b><b><b></CENTER></p>");
+			out.println("<script language=javascript type=text/javascript>");
+			out.println("setTimeout("+"\"javascript:location.href='../index.html'\""+", 2500);");
+			out.println("</script>");
+		}
+	}
 %>
 
 </div>
