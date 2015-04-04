@@ -58,7 +58,7 @@ if (((Boolean)session.getAttribute("isOracleLogin")) && ((Boolean)session.getAtt
 	out.println("<div id='image' style='background: url(../theme.jpg) no-repeat; width: 100%; height: 100%; background-size: 100%;'>");
 	out.println("<br><br><br><br><br><br><br><H1><CENTER>Data Analysis</CENTER></H1><CENTER><P><CENTER>Please Check The Attributes You Want To Group By</CENTER></P>");
 			
-	out.println("<br><FORM ACTION='dataAnalysisResult.jsp' METHOD='post' ><table><tr><td><input type='checkbox' name='name1'></td><td>Name</td></tr><tr><td><input type='checkbox' name='type'></td><td>Test Type</td></tr>");
+	out.println("<br><FORM ACTION='dataAnalysis1GetType.jsp' METHOD='post' ><table><tr><td><input type='checkbox' name='name1'></td><td>Name</td></tr><tr><td><input type='checkbox' name='type'></td><td>Test Type</td></tr>");
 	
 	out.println("<tr><td><input type='checkbox' name='date'></td><td>Date</td></tr></table><br>");
 	
