@@ -85,7 +85,7 @@
 	        		
 	        //display the result
 		    if(passwd.equals(truepwd)){
-		    	Boolean isUserLogin = true;
+		    	isUserLogin = true;
 		        session.setAttribute("isUserLogin",isUserLogin);
 		        
 			    out.println("<p><CENTER>Your Login Successful!</p>");
