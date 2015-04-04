@@ -15,8 +15,8 @@
 			String sqlpwd =  (String)session.getAttribute("SQLPASSWD");
 			
 	        //get the user input from the login page
-        	String userName = (request.getParameter("USERID"));
-	        String passwd   = (request.getParameter("PASSWD"));
+        	String userName = (request.getParameter("USERID")).trim();
+	        String passwd   = (request.getParameter("PASSWD")).trim();
 	        
 	        //set attributes
 	        session.setAttribute("USERID",userName);

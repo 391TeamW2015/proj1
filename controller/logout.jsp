@@ -6,8 +6,6 @@
 		if(request.getParameter("LogOut") != null)
         {
 			//delete the attributes
-			session.setAttribute("SQLUSERID",null);
-			session.setAttribute("SQLPASSWD",null);
 			Boolean isUserLogin = false;
 			session.setAttribute("isUserLogin",isUserLogin);
 					
