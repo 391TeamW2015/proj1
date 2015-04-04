@@ -1,6 +1,6 @@
 <HTML>
 <HEAD>
-<TITLE>Your Login Result</TITLE>
+<TITLE>Data Analysis Result</TITLE>
 </HEAD>
 
 <BODY>
@@ -9,17 +9,41 @@
 <% 
 	String sqlname = (String)session.getAttribute("SQLUSERID");
 	String sqlpwd =  (String)session.getAttribute("SQLPASSWD");
-
+	
+	String upDown = "null";
+	try {
+		upDown = (request.getParameter("upDown")).trim();
+	} catch(Exception ex) {
+		upDown = "null";
+	}
+	
 	String name1=(String)session.getAttribute("name1");
 	String type=(String)session.getAttribute("type");
-	
 	String year=(String)session.getAttribute("year");;
 	String month=(String)session.getAttribute("month");
 	String week=(String)session.getAttribute("week");
+	
+    out.println("<HTML><HEAD><TITLE>Data Analysis Result</TITLE></HEAD><BODY>");
+    out.println("<div id='image' style='background: url(../theme.jpg) no-repeat; width: 100%; height: 100%; background-size: 100%;'>");
+    
+	if (upDown.equals("Up")) {
+		if (week.equals("on")) {
+			week = "off";
+		}
+		else if (week.equals("off") && month.equals("on")) {
+			month = "off";
+		}
+	}
+	else if (upDown.equals("Down")) {
+		if (year.equals("on") && month.equals("off")) {
+			month = "on";
+		}
+		else if (year.equals("on") && month.equals("on") && week.equals("off")) {
+			week = "on";
+		}
+	}
        
-       out.println("<HTML><HEAD><TITLE>Data Analysis Result</TITLE></HEAD><BODY>");
-       out.println("<div id='image' style='background: url(../theme.jpg) no-repeat; width: 100%; height: 100%; background-size: 100%;'>");
-       
+
        //out.println("<p>"+name1 +" "+type+" "+year+" "+month+" "+week+ "</p>");
 
        String sql = "";

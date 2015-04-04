@@ -1,6 +1,6 @@
 <HTML>
 <HEAD>
-<TITLE>Your Login Result</TITLE>
+<TITLE>Data Analysis Result</TITLE>
 </HEAD>
 
 <BODY>
