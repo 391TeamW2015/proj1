@@ -424,8 +424,7 @@
 					                out.println(rset4.getString(10));
 					                out.println("</td>");
 					                out.println("<td>"); 
-									//out.println("<a href=\"PictureBrowse?"+recid+"\" target='_blank'>Pictures</a>");	
-									out.println("<center><FORM ACTION='view/administrator.html' METHOD='post' ><INPUT TYPE='submit' NAME='ad_back' VALUE='Back' style= 'width: 150; height: 30'></FORM></center></div></BODY></HTML>");	
+					                out.println("<a href=\"PictureBrowse?" + recid + "\"><img src=\"GetOnePic?" + recid +"\" style=\"display:block; width:100px; height:auto;\"></a>");	
 					                out.println("</td>");
 					                out.println("</tr>");
 					              }
@@ -500,7 +499,9 @@
 				                out.println(rset4.getString(10));
 				                out.println("</td>");
 				                out.println("<td>"); 
-								out.println("<a href=\"PictureBrowse?"+recid+"\" target='_blank'>Pictures</a>");
+				                out.println("<a href=\"PictureBrowse?" + recid + "\"><img src=\"GetOnePic?" + recid +"\" style=\"display:block; width:100px; height:auto;\"></a>");
+				                //out.println("<a href=\"GetOnePic?" + recid + "\"><img src=\"GetOnePic?" + recid +"\" style=\"display:block; width:100px; height:auto;\"></a>");
+								//out.println("<a href=\"PictureBrowse?"+recid+"\" target='_blank'>Pictures</a>");
 								//out.println("<center><FORM ACTION='view/administrator.html' METHOD='post' ><INPUT TYPE='submit' NAME='ad_back' VALUE='Back' style= 'width: 150; height: 30'></FORM></center></div></BODY></HTML>");	
 				                out.println("</td>");
 				                out.println("</tr>");

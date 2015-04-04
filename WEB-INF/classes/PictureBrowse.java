@@ -59,7 +59,7 @@ public class PictureBrowse extends HttpServlet
 	    ResultSet rset1 = stmt1.executeQuery(query);
 	    String p_id = "";
 	    if (rset1.next()){
-		    out.println("<h3>Images for record " + rec_id);
+		    out.println("<h3>Images for record wofoafohoh" + rec_id);
 		    out.println(":</h3>");
 		    out.println("<p>Click Image to view Normal-size Image.");
 		    out.println("Click Link below to view Full-size Image.</p>");
@@ -70,7 +70,7 @@ public class PictureBrowse extends HttpServlet
 		       out.println("<a href=\"GetOnePic?normal"+p_id+"\">");
 		       out.println("<img src=\"GetOnePic?"+p_id +
 			           "\"></a></tr><br>");
-		       out.println("<tr><a href=\"GetOnePic?big"+p_id+"\"> Full-Size Image</a>");
+		       out.println("<tr><a href=\"GetOnePic?big"+p_id+"\"> Full-Size Image </a>");
 		       out.println("</tr><br><br><br>");
 		    }
 	    }
