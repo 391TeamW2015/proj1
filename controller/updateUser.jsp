@@ -350,26 +350,33 @@
 					int n = pidList.size();
 					for(int i = 0; i < n ; i++)
 						out.println("<input type='radio' name='id' value="+pidList.get(i)+">"+pidList.get(i)+" "+nameList.get(i)+"<br>");
-					out.println("<input type='radio' name='id' value=-1 checked >None/add new");
+					out.println("");
 		        	out.println("</td></tr>"); 
-		        	out.println("<tr><td>New ID:</td><td colspan=2>");
-		        	out.println("<select name='List'><option value='-1'>remove</option>");
+		        	out.println("<tr><td><input type='radio' name='id' value=-1 checked >Add a Patient:</td><td colspan=2>");
+		        	out.println("<select name='List'><option value='-1'>Remove</option>");
 		        	int m = ppidList.size();
 		        	for(int i = 0; i < m; i++)
 		        		out.println("<option value="+ppidList.get(i)+">"+ppidList.get(i)+" "+dnameList.get(i)+"</option>");
 				}
-				else{
+				else if (type.equals("p")) {
 					out.println("<tr><td>Doctor ID & Name:</td><td colspan=2>");
 					int n = idList.size();
-					for(int i = 0; i < n ; i++)
+					for(int i = 0; i < n ; i++) {
 						out.println("<input type='radio' name='id' value="+idList.get(i)+">"+idList.get(i)+" "+nameList.get(i)+"<br>");
-					out.println("<input type='radio' name='id' value=-1 checked >None/add new");
+					}
 		        	out.println("</td></tr>"); 
-		        	out.println("<tr><td>Update to:</td><td colspan=2>");
-		        	out.println("<select name='List'><option value='-1'>remove</option>");
+		        	out.println("<tr><td><input type='radio' name='id' value=-1 checked >Add a Doctor:  </td><td colspan=2>");
+		        	out.println("<select name='List'><option value='-1'>Remove</option>");
 		        	int m = didList.size();
 		        	for(int i = 0; i < m; i++)
 		        		out.println("<option value="+didList.get(i)+">"+didList.get(i)+" "+dnameList.get(i)+"</option>");
+				}
+				else {
+					out.println("<tr><td>Family Doctor:</td><td colspan=2>");
+					out.println("<input type='radio' name='id' value=-1 checked >None");
+		        	out.println("</td></tr>"); 
+		        	out.println("<tr><td>Not a Patient or Doctor:</td><td colspan=2>");
+		        	out.println("<select name='List'><option value='-1'>Cannot Modify</option>");
 				}
 	        	out.println("</select></td></tr>"); 
 				out.println("<tr><td colspan=2><hr></td></tr>");
