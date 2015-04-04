@@ -7,7 +7,7 @@
 
 <%@page import="java.sql.*" %>
 <% 
-	if(request.getParameter("bSubmit") != null)
+	if((request.getParameter("bSubmit") != null) && ((Boolean)session.getAttribute("isOracleLogin")))
         {			
 		
 			//get oracle userName and password
@@ -17,9 +17,10 @@
 	        //get the user input from the login page
         	String userName = (request.getParameter("USERID"));
 	        String passwd   = (request.getParameter("PASSWD"));
+	        
+	        //set attributes
 	        session.setAttribute("USERID",userName);
 	        
-
 		    //establish the connection to the underlying database
 	        Connection conn = null;
 		
@@ -121,6 +122,13 @@
 	        	out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
 	        }
         }
+	else
+	{
+        out.println("<br><br><br><br><br><p><CENTER><b><b><b><h1>You didn't login the oracle database!</h1></b><b><b></CENTER></p>");
+		out.println("<script language=javascript type=text/javascript>");
+		out.println("setTimeout("+"\"javascript:location.href='../index.html'\""+", 2500);");
+		out.println("</script>");
+    }
   
 %>
 

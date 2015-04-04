@@ -173,10 +173,17 @@
 	        //-------- Year, Month, Day are selected --------------------------------
 	        else if(name1=="off" && type=="off" && year != "off" && month!="off" && week!="off"){
 	        	out.println("<p><center><------(YEAR && MONTH && WEEK) ONLY/center></p>");
+/* <<<<<<< HEAD:controller/dataAnalysisResult.jsp
 	        	sql="select extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww'),count(*)"
 	        	+" from radiology_record rr,persons p,pacs_images pp "
 	        	+"where rr.patient_id = p.person_id and pp.record_id = rr.record_id "
 	        	+"group by extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww')";
+======= */
+	        	sql="select extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*)"
+	        	+" from radiology_record rr,persons p,pacs_images pp "
+	        	+"where rr.patient_id = p.person_id and pp.record_id = rr.record_id "
+	        	+"group by extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w')";
+
 	        }
 	      
 	        //*************** 4 of them are selected*************************************************************************3
@@ -191,27 +198,54 @@
 	        // ------------------------- Name, Year, Month, Day are selected -----------------------------
 	        else if(name1!="off" && type=="off" && year != "off" && month!="off" && week!="off"){
 	        	out.println("<p><center>------(PATIENTS && TIME TO YEAR->MONTH->WEEK) ONLY</center></p>");
+/* <<<<<<< HEAD:controller/dataAnalysisResult.jsp
 	        	sql="select p.first_name,p.last_name,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww'),count(*) "
 	        	+"from radiology_record rr,persons p,pacs_images pp where rr.patient_id = p.person_id and pp.record_id = rr.record_id "
 	        	+"group by p.first_name,p.last_name,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww') "
 	        	+"order by p.first_name,p.last_name,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww'),count(*)";
+======= */
+	        	sql="select p.first_name,p.last_name,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*) "
+	        	+"from radiology_record rr,persons p,pacs_images pp where rr.patient_id = p.person_id and pp.record_id = rr.record_id "
+	        	+"group by p.first_name,p.last_name,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w') "
+	        	+"order by p.first_name,p.last_name,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*)";
+
 	        }
 	        // ------------------------- Type, Year, Month, Day are selected -----------------------------
 	        else if(name1=="off" && type!="off" && year != "off" && month!="off" && week!="off"){
 	        	out.println("<p><center>------(TEST_TYPE && TIME TO YEAR->MONTH->WEEK) ONLY</center></p>");
+/* <<<<<<< HEAD:controller/dataAnalysisResult.jsp
 	        	sql="select rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww'),count(*) "
 	        	+"from radiology_record rr,pacs_images pp where pp.record_id = rr.record_id "
 	        	+"group by rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww') "
 	        	+"order by rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww'),count(*)";
+======= */
+	        	sql="select rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*) "
+	        	+"from radiology_record rr,pacs_images pp where pp.record_id = rr.record_id "
+	        	+"group by rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w') "
+	        	+"order by rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*)";
+
 	        }
 	        //*************** All of them are selected*************************************************************************1
 	        else if(name1!="off" && type!="off" && year != "off" && month!="off" && week!="off"){
 	        	out.println("<p><center>------(PATIENTS && TEST_TYPE && TIME TO YEAR->MONTH->WEEK) </center></p>");
+/* <<<<<<< HEAD:controller/dataAnalysisResult.jsp
 	        	sql="select p.first_name,p.last_name,rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww'),count(*) "
+======= */
+	        	sql="select p.first_name,p.last_name,rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*) "
+
 	        	+"from radiology_record rr,persons p,pacs_images pp where rr.patient_id = p.person_id and pp.record_id = rr.record_id "
 	        	+"group by p.first_name,p.last_name,rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww') "
 	        	+"order by p.first_name,p.last_name,rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww'),count(*)";                                   
 	        }
+	      
+	        else if(name1=="off" && type=="off" && year == "off" && month=="off" && week!="off"){
+	        	out.println("<p><center>------TIME OF WEEK ONLY(DISTINCT)</center></p>");
+	        	sql="select to_char(rr.test_date,'ww'),count(*) "
+	        	+"from radiology_record rr,pacs_images pp where pp.record_id = rr.record_id "
+	        	+"group by to_char(rr.test_date,'ww') "
+	        	+"order by to_char(rr.test_date,'ww'),count(*)";
+	        }
+
 	        
 	        else{
 	        	out.println("condition unknow");

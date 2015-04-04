@@ -52,7 +52,7 @@ function checkform(form) {
 <br>
 
 <h3><center>
-<FORM ACTION="../controller/oracleLogout.jsp" METHOD="post" >
+<FORM ACTION="../index.html" METHOD="post" >
 <INPUT TYPE="submit" NAME="oLogOut" VALUE="Log Out Oracle">
 </FORM>
 
