@@ -2,7 +2,7 @@
 <HEAD>
 <TITLE>Your Search Result</TITLE>
 </HEAD>
-<div style='background: url(../theme.jpg) no-repeat; width: 100%; height: 100%; background-size: 100%;'>
+<div style='background: url(theme.jpg) no-repeat; width: 100%; height: 100%; background-size: 100%;'>
 <BODY>
 
 <%@page import="java.sql.*" import="java.text.SimpleDateFormat" import= "java.util.*"%>
@@ -52,7 +52,7 @@
 		    	out.println("<br><br>");
 		    	out.println("<p><h2>please provide valid time period!</h2></p>");
 		    	out.println("<script language=javascript type=text/javascript>");
-		    	out.println("setTimeout("+"\"javascript:location.href='../view/search.html'\""+", 2500);");
+		    	out.println("setTimeout("+"\"javascript:location.href='view/search.html'\""+", 2500);");
 		    	out.println("</script>");
 			}
 			else{
@@ -420,7 +420,7 @@
 					                out.println("</td>");
 					                out.println("<td>"); 
 									//out.println("<a href=\"PictureBrowse?"+recid+"\" target='_blank'>Pictures</a>");	
-									out.println("<center><FORM ACTION='../view/administrator.html' METHOD='post' ><INPUT TYPE='submit' NAME='ad_back' VALUE='Back' style= 'width: 150; height: 30'></FORM></center></div></BODY></HTML>");	
+									out.println("<center><FORM ACTION='view/administrator.html' METHOD='post' ><INPUT TYPE='submit' NAME='ad_back' VALUE='Back' style= 'width: 150; height: 30'></FORM></center></div></BODY></HTML>");	
 					                out.println("</td>");
 					                out.println("</tr>");
 					              }
@@ -496,22 +496,22 @@
 				                out.println("</td>");
 				                out.println("<td>"); 
 								out.println("<a href=\"PictureBrowse?"+recid+"\" target='_blank'>Pictures</a>");
-								//out.println("<center><FORM ACTION='../view/administrator.html' METHOD='post' ><INPUT TYPE='submit' NAME='ad_back' VALUE='Back' style= 'width: 150; height: 30'></FORM></center></div></BODY></HTML>");	
+								//out.println("<center><FORM ACTION='view/administrator.html' METHOD='post' ><INPUT TYPE='submit' NAME='ad_back' VALUE='Back' style= 'width: 150; height: 30'></FORM></center></div></BODY></HTML>");	
 				                out.println("</td>");
 				                out.println("</tr>");
 				              }
 		        		}
 			        	out.println("</table>");
 			        	out.println("<BR>");
-			        	out.println("<form action='../view/search.html' METHOD='post'>");
+			        	out.println("<form action='view/search.html' METHOD='post'>");
 			        	out.println("<input type='submit' name='search_back' value='Back'>");
-			        	out.println("<br><br><a href='../view/userDocumentation.html' target='_blank'>Help</a></form>");        		
+			        	out.println("<br><br><a href='view/userDocumentation.html' target='_blank'>Help</a></form>");        		
 		        		
 		        	}
 			        catch(Exception ex){
 				        out.println("<hr><center>" + ex.getMessage() + "</center><hr>");
 				    	out.println("<script language=javascript type=text/javascript>");
-				    	out.println("setTimeout("+"\"javascript:location.href='../view/search.html'\""+", 2500);");
+				    	out.println("setTimeout("+"\"javascript:location.href='view/search.html'\""+", 2500);");
 				    	out.println("</script>");
 				        out.println("</div>");
 				        conn.rollback();
