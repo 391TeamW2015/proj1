@@ -234,7 +234,8 @@
 			        	Integer rank2 = null;
 			        	Integer rank3 = null;
 			        	
-			        	SimpleDateFormat sy1=new SimpleDateFormat("yyyy-mm-dd");
+			        	SimpleDateFormat sy1=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			        	
 			        	
 			        	//select result by use name
 						for(int i = 0; i < x; i++){
@@ -249,10 +250,17 @@
 				                String E = rset4.getString(5);
 				                String f1 = rset4.getString(6);
 				                String g1 = rset4.getString(7);
-				    	        java.util.Date f = (java.util.Date)sy1.parse(f1);
+				                
+				                //out.println("<p> g1 = "+g1+"</p>");
+				                
+				    	        java.util.Date f = (java.util.Date) sy1.parse(f1);
 				    	        java.sql.Date F = new java.sql.Date(f.getTime());
-				    	        java.util.Date g = (java.util.Date)sy1.parse(g1);
-				    	        java.sql.Date G = new java.sql.Date(g.getTime()); 
+				    	        
+				    	        java.util.Date g = (java.util.Date) sy1.parse(g1);
+				    	        java.sql.Date G = new java.sql.Date(g.getTime());
+				    	        
+				    	        
+				    	        
 				                String H = rset4.getString(8);
 				                String I = rset4.getString(9);
 				                Integer J = rank1;
@@ -286,10 +294,16 @@
 				                String E = rset4.getString(5);
 				                String f1 = rset4.getString(6);
 				                String g1 = rset4.getString(7);
+				                
+				                //out.println("<p> g1 = "+g1+"</p>");
+				                
 				    	        java.util.Date f = (java.util.Date)sy1.parse(f1);
 				    	        java.sql.Date F = new java.sql.Date(f.getTime());
 				    	        java.util.Date g = (java.util.Date)sy1.parse(g1);
 				    	        java.sql.Date G = new java.sql.Date(g.getTime());
+				    	        
+				    	        ///out.println("<p> 2g = "+g+"</p>");
+				    	        
 				                String H = rset4.getString(8);
 				                String I = rset4.getString(9);
 				                Integer J = rank2;
@@ -324,10 +338,16 @@
 				                String E = rset4.getString(5);
 				                String f1 = rset4.getString(6);
 				                String g1 = rset4.getString(7);
+				                
+				                
+				                
 				    	        java.util.Date f = (java.util.Date)sy1.parse(f1);
 				    	        java.sql.Date F = new java.sql.Date(f.getTime());
 				    	        java.util.Date g = (java.util.Date)sy1.parse(g1);
-				    	        java.sql.Date G = new java.sql.Date(g.getTime()); 
+				    	        java.sql.Date G = new java.sql.Date(g.getTime());
+				    	        
+				    	        //out.println("<p> 3g = "+g+"</p>");
+				    	        
 				                String H = rset4.getString(8);
 				                String I = rset4.getString(9);
 				                Integer J = rank3;
@@ -390,10 +410,18 @@
 		        			
 		        			for(int h = 0; h < size; h++){
 				        		if ((!From.equals("")) && (!To.equals(""))){
+				        			if (useful.equals("")){
+				        				// select * from radiology_record rr where rr.patient_id = '4' and rr.doctor_id = '3' and rr.test_date between '04-Mar-15' and '01-May-15' order by rr.test_date desc
+				        				doSearch = conn.prepareStatement("select * from radiology_record rr where patient_id = "+patientList.get(h)+" and doctor_id ="+person_ID
+				        						+" and rr.test_date between '"+From+"' and '"+To+"' order by rr.test_date desc");
+				        			}
+				        			else {
 				        				doSearch=conn.prepareStatement("SELECT distinct record_id,patient_id,doctor_id,radiologist_id,test_type,P_date,t_date,diagnosis, description, Rank FROM resultSet "
 				        						+"where patient_id = "+patientList.get(h)+" and "+
 				        				        "doctor_id ="+person_ID
 				        						+"t_date between '"+From+"' and '"+To+"' order by Rank desc");
+				        			}
+				        				
 				        		}
 				        		else{
 				      				doSearch=conn.prepareStatement("SELECT distinct record_id,patient_id,doctor_id,radiologist_id,test_type,P_date,t_date,diagnosis, description, Rank FROM resultSet where patient_id = "+patientList.get(h)+" and"+
@@ -434,7 +462,9 @@
 					                out.println(rset4.getString(9));
 					                out.println("</td>");
 					                out.println("<td>"); 
-					                out.println(rset4.getString(10));
+					                if (!useful.equals("")) {
+					                	out.println(rset4.getString(10));
+					                }
 					                out.println("</td>");
 					                out.println("<td>"); 
 					             // find image id
@@ -479,8 +509,15 @@
 		        			//if the user is radiologist, print results that he inserted
 			        		else if (classtype.equals("r")){
 				        		if ((!From.equals("")) && (!To.equals(""))){
+				        			if (useful.equals("")){
+				        				doSearch=conn.prepareStatement("select * from radiology_record rr where radiologist_id = "+person_ID+" and rr.test_date between '"+From+"' and '"+To+"' order by rr.test_date desc");
+				        			}
+				        			else {
+				        				//out.println("<tr>I am in the right plase</tr>");
 				        				doSearch=conn.prepareStatement("SELECT distinct record_id,patient_id,doctor_id,radiologist_id,test_type,P_date,t_date,diagnosis, description, Rank FROM resultSet "
 				        						+"where radiologist_id = "+person_ID+" and t_date between '"+From+"' and '"+To+"' order by Rank desc");
+				        			}
+				        				
 				        		}
 				        		else{
 				      				doSearch=conn.prepareStatement("SELECT distinct record_id,patient_id,doctor_id,radiologist_id,test_type,P_date,t_date,diagnosis, description, Rank FROM resultSet where radiologist_id = "+person_ID+" order by Rank desc");
@@ -489,8 +526,15 @@
 		        			//if the user is patient, print result of his record
 			        		else if (classtype.equals("p")){
 				        		if ((!From.equals("")) && (!To.equals(""))){
+				        			if (useful.equals("")){
+				        				doSearch=conn.prepareStatement("select * from radiology_record rr where patient_id = "+person_ID+" and rr.test_date between '"+From+"' and '"+To+"' order by rr.test_date desc");
+				        			}
+				        			else {
+				        				//out.println("<tr>I am in the right plase</tr>");
 				        				doSearch=conn.prepareStatement("SELECT distinct record_id,patient_id,doctor_id,radiologist_id,test_type,P_date,t_date,diagnosis, description, Rank FROM resultSet "
 				        						+"where patient_id = "+person_ID+" and t_date between '"+From+"' and '"+To+"' order by Rank desc");
+				        			}
+				        				
 				        		}
 				        		else{
 				      				doSearch=conn.prepareStatement("SELECT distinct record_id,patient_id,doctor_id,radiologist_id,test_type,P_date,t_date,diagnosis, description, Rank FROM resultSet where patient_id = "+person_ID+" order by Rank desc");
