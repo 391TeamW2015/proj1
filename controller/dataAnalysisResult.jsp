@@ -7,53 +7,48 @@
 
 <%@page import="java.sql.*" %>
 <% 
-	if(request.getParameter("search2") != null)
+	if(request.getParameter("doAnalysis") != null)
         {			
 			String sqlname = (String)session.getAttribute("SQLUSERID");
 			String sqlpwd =  (String)session.getAttribute("SQLPASSWD");
-			String name1="";
-			String type="";
-			String year="";
-			String month="";
-			String week="";
-	        //get the user input from the login page
+			String name1="off";
+			String type="off";
+			
+			String year="off";
+			String month="off";
+			String week="off";
+	        
+			//get the user input from the login page
 	        try{
-        			name1 = (request.getParameter("name1")).trim();
-        			}
-	        catch(Exception ex){
-	        		name1="off";
+        		name1 = (request.getParameter("name1")).trim();
+        	} catch(Exception ex){
+	        	name1="off";
 	        }
 	        
 	        try{
-	        		type = (request.getParameter("type")).trim();
-    			}
-        	catch(Exception ex){
-        			type="off";
+				type = (request.getParameter("type")).trim();
+    		} catch(Exception ex){
+        		type="off";
         	}
 	        
+	        //set year & month is default date
 	        try{
-        		year = (request.getParameter("year")).trim();
+	        	year = (request.getParameter("date")).trim();
+        		month= (request.getParameter("date")).trim();
 			}
     		catch(Exception ex){
-    			year="off";
+    			year  = "off";
+    			month = "off";
     		}
 	        
-	        try{
-        		month= (request.getParameter("month")).trim();
-			}
-    		catch(Exception ex){
-    			month="off";
-    		}
 	        
-	        try{
-        		week = (request.getParameter("week")).trim();
-			}
-    		catch(Exception ex){
-    			week="off";
-    		}
+	        
 	        out.println("<HTML><HEAD><TITLE>Data Analysis Result</TITLE></HEAD><BODY>");
 	        out.println("<div id='image' style='background: url(../theme.jpg) no-repeat; width: 100%; height: 100%; background-size: 100%;'>");
 	        out.println("<p><br><br><br><br><br><br></p>");
+	        
+	        //out.println("<p>"+name1+"</p>");
+	        //out.println("<p>"+type+"</p>");
 
 	        //establish the connection to the underlying database
         	Connection conn = null;
@@ -88,11 +83,12 @@
 	        ResultSet rset2 = null;
 	        String sql = "";
 	        
+	      //********** none -> null *******************************************************************************1
 	        if(name1=="off" && type=="off" && year == "off" && month=="off" && week=="off"){
 	        	out.println("<p><center>------non selected</center></p>");
 	        	sql = "select count(*) from pacs_images pp";
 	        }
-	      //**********single*************************************************************************************************5
+	      //********** single -> name, type, year *****************************************************************3
 	        else if(name1!="off" && type=="off" && year == "off" && month=="off" && week=="off"){
 	        	out.println("<p><center>------PATIENTS ONLY</center></p>");
 	        	sql="select p.first_name,p.last_name,count(*) "
@@ -114,23 +110,9 @@
 	        	+"group by extract(year from rr.test_date) "
 	        	+"order by extract(year from rr.test_date),count(*)";
 	        }
-	        else if(name1=="off" && type=="off" && year == "off" && month!="off" && week=="off"){
-	        	out.println("<p><center>------TIME OF MONTH ONLY(DISTINCT)</center></p>");
-	        	sql="select extract(month from rr.test_date),count(*) "
-	        	+"from radiology_record rr,pacs_images pp where pp.record_id = rr.record_id "
-	        	+"group by extract(month from rr.test_date) "
-	        	+"order by extract(month from rr.test_date),count(*)";
-	        }
-	        else if(name1=="off" && type=="off" && year == "off" && month=="off" && week!="off"){
-	        	out.println("<p><center>------TIME OF WEEK ONLY(DISTINCT)</center></p>");
-	        	sql="select to_char(rr.test_date,'ww'),count(*) "
-	        	+"from radiology_record rr,pacs_images pp where pp.record_id = rr.record_id "
-	        	+"group by to_char(rr.test_date,'ww') "
-	        	+"order by to_char(rr.test_date,'ww'),count(*)";
-	        }
-	        
-	        //*************double*********************************************************************************************11
-	        //----------------------------------persons...
+
+	        //************* double ********************************************************************************************4
+	        //----------------------------------Name and Type are selected---------------------------------
 	        else if(name1!="off" && type!="off" && year == "off" && month=="off" && week=="off"){
 	        	out.println("<p><center>------(PATIENTS && TEST_TYPE) ONLY</center></p>");
 	        	sql="select p.first_name,p.last_name,rr.test_type,count(*) "
@@ -138,6 +120,7 @@
 	        	+"group by p.first_name,p.last_name,rr.test_type "
 	        	+"order by p.first_name,p.last_name,rr.test_type,count(*)";
 	        }
+	        //----------------------------------Name and Year are selected---------------------------------
 	        else if(name1!="off" && type=="off" && year != "off" && month=="off" && week=="off"){
 	        	out.println("<p><center>------(PATIENTS && YEAR) ONLY</center></p>");
 	        	sql="select p.first_name,p.last_name,extract(year from rr.test_date),count(*) "
@@ -145,21 +128,7 @@
 	        	+"group by p.first_name,p.last_name,extract(year from rr.test_date) "
 	        	+"order by p.first_name,p.last_name,extract(year from rr.test_date),count(*)";
 	        }
-	        else if(name1!="off" && type=="off" && year == "off" && month!="off" && week=="off"){
-	        	out.println("<p><center>------(PATIENTS && MONTH) ONLY</center></p>");
-	        	sql="select p.first_name,p.last_name,extract(month from rr.test_date),count(*) "
-	        	+"from radiology_record rr,persons p,pacs_images pp where rr.patient_id = p.person_id and pp.record_id = rr.record_id "
-	        	+"group by p.first_name,p.last_name,extract(month from rr.test_date) "
-	        	+"order by p.first_name,p.last_name,extract(month from rr.test_date),count(*)";
-	        }
-	        else if(name1!="off" && type=="off" && year == "off" && month=="off" && week!="off"){
-	        	out.println("<p><center>------(PATIENTS && WEEK) ONLY</center></p>");
-	        	sql="select p.first_name,p.last_name,to_char(rr.test_date,'w'),count(*) "
-	        	+"from radiology_record rr,persons p,pacs_images pp where rr.patient_id = p.person_id and pp.record_id = rr.record_id "
-	        	+"group by p.first_name,p.last_name,to_char(rr.test_date,'w') "
-	        	+"order by p.first_name,p.last_name,to_char(rr.test_date,'w'),count(*)";
-	        }
-	        //-----------------------------4COLOMS
+	        //----------------------------------Type and Year are selected---------------------------------
 	        else if(name1=="off" && type!="off" && year != "off" && month=="off" && week=="off"){
 	        	out.println("<p><center>------(TEST_TYPE && YEAR) ONLY</center></p>");
 	        	sql="select rr.test_type,extract(year from rr.test_date),count(*) "
@@ -167,21 +136,7 @@
 	        	+"group by rr.test_type,extract(year from rr.test_date) "
 	        	+"order by rr.test_type,extract(year from rr.test_date),count(*)";
 	        }
-	        else if(name1=="off" && type!="off" && year == "off" && month!="off" && week=="off"){
-	        	out.println("<p><center>------(TEST_TYPE && MONTH) ONLY</center></p>");
-	        	sql="select rr.test_type,extract(month from rr.test_date),count(*) "
-	        	+"from radiology_record rr,pacs_images pp where pp.record_id = rr.record_id "
-	        	+"group by rr.test_type,extract(month from rr.test_date) "
-	        	+"order by rr.test_type,extract(month from rr.test_date),count(*)";
-	        }
-	        else if(name1=="off" && type!="off" && year == "off" && month=="off" && week!="off"){
-	        	out.println("<p><center>------(TEST_TYPE && WEEK) ONLY</center></p>");
-	        	sql="select rr.test_type,to_char(rr.test_date,'ww'),count(*) "
-	        	+"from radiology_record rr,pacs_images pp where pp.record_id = rr.record_id "
-	        	+"group by rr.test_type,to_char(rr.test_date,'ww') "
-	        	+"order by rr.test_type,to_char(rr.test_date,'ww'),count(*)";
-	        }
-	        //---------------------------
+			//---------------------------------- Year and Month are selected---------------------------------
 	        else if(name1=="off" && type=="off" && year != "off" && month!="off" && week=="off"){
 	        	out.println("<p><center>------(YEAR AND MONTH) ONLY</center></p>");
 	        	sql="select extract(year from rr.test_date),extract(month from rr.test_date),count(*) "
@@ -189,102 +144,9 @@
 	        	+"group by extract(year from rr.test_date),extract(month from rr.test_date) "
 	        	+"order by extract(year from rr.test_date),extract(month from rr.test_date),count(*)";
 	        }
-	        else if(name1=="off" && type=="off" && year != "off" && month=="off" && week!="off"){
-	        	out.println("<p><center>------(YEAR AND WEEK) ONLY</center></p>");
-	        	sql="select extract(year from rr.test_date),to_char(rr.test_date,'ww'),count(*) "
-	        	+"from radiology_record rr,pacs_images pp where pp.record_id = rr.record_id "
-	        	+"group by extract(year from rr.test_date),to_char(rr.test_date,'ww') "
-	        	+"order by extract(year from rr.test_date),to_char(rr.test_date,'ww'),count(*)";
-	        }
-	        else if(name1=="off" && type=="off" && year == "off" && month!="off" && week!="off"){
-	        	out.println("<p><center>------(MONTH AND WEEK) ONLY</center></p>");
-	        	sql="select extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*) "
-	        	+"from radiology_record rr,pacs_images pp where pp.record_id = rr.record_id "
-	        	+"group by extract(month from rr.test_date),to_char(rr.test_date,'w') "
-	        	+"order by extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*)";
-	        }
-	        //--------DOUBLE 3 COLOMS--------END------------------------********************
-	        //---------TRIPLE--------------------
-	        else if(name1=="off" && type=="off" && year != "off" && month!="off" && week!="off"){
-	        	out.println("<p><center><------(YEAR && MONTH && WEEK) ONLY/center></p>");
-	        	sql="select extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*)"
-	        	+" from radiology_record rr,persons p,pacs_images pp "
-	        	+"where rr.patient_id = p.person_id and pp.record_id = rr.record_id "
-	        	+"group by extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w')";
-	        }
-	        else if(name1!="off" && type!="off" && year == "off" && month=="off" && week!="off"){
-	        	out.println("<p><center><------(PATIENTS && TEST TYPE && WEEK) ONLY/center></p>");
-	        	sql="select p.first_name,p.last_name,rr.test_type,to_char(rr.test_date,'ww'),count(*)"
-	        	+" from radiology_record rr,persons p,pacs_images pp"
-	        	+" where rr.patient_id = p.person_id and pp.record_id = rr.record_id "
-	        	+" group by p.first_name,p.last_name,rr.test_type,to_char(rr.test_date,'ww')";
-	        }
-	        else if(name1!="off" && type!="off" && year == "off" && month!="off" && week=="off"){
-	        	out.println("<p><center><------(PATIENTS && TEST TYPE && MONTH) ONLY/center></p>");
-	        	sql="select p.first_name,p.last_name,rr.test_type,extract(month from rr.test_date),count(*)"
-	        	+" from radiology_record rr,persons p,pacs_images pp "
-	        	+" where rr.patient_id = p.person_id and pp.record_id = rr.record_id "
-	        	+" group by p.first_name,p.last_name,rr.test_type,extract(month from rr.test_date)";
-	        }
-	        else if(name1!="off" && type=="off" && year != "off" && month!="off" && week=="off"){
-	        	out.println("<p><center><------(PATIENTS && YEAR && MONTH) ONLY/center></p>");
-	        	sql="select p.first_name,p.last_name,extract(year from rr.test_date),extract(month from rr.test_date),count(*) "
-	        	+"from radiology_record rr,persons p,pacs_images pp where rr.patient_id = p.person_id and pp.record_id = rr.record_id "
-	        	+"group by p.first_name,p.last_name,extract(year from rr.test_date),extract(month from rr.test_date) "
-	        	+"order by p.first_name,p.last_name,extract(year from rr.test_date),extract(month from rr.test_date),count(*)";
-	        }
-	        else if(name1!="off" && type=="off" && year != "off" && month=="off" && week!="off"){
-	        	out.println("<p><center>------(PATIENTS && TIME TO YEAR->WEEK) ONLY</center></p>");
-	        	sql="select p.first_name,p.last_name,extract(year from rr.test_date),to_char(rr.test_date,'ww'),count(*) "
-	        	+"from radiology_record rr,persons p,pacs_images pp where rr.patient_id = p.person_id and pp.record_id = rr.record_id "
-	        	+"group by p.first_name,p.last_name,extract(year from rr.test_date),to_char(rr.test_date,'ww') "
-	        	+"order by p.first_name,p.last_name,extract(year from rr.test_date),to_char(rr.test_date,'ww'),count(*)";
-	        }
-	        else if(name1!="off" && type=="off" && year == "off" && month!="off" && week!="off"){
-	        	out.println("<p><center>------(PATIENTS && TIME TO MONTH->WEEK) ONLY</center></p>");
-	        	sql="select p.first_name,p.last_name,extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*) "
-	        	+"from radiology_record rr,persons p,pacs_images pp where rr.patient_id = p.person_id and pp.record_id = rr.record_id "
-	        	+"group by p.first_name,p.last_name,extract(month from rr.test_date),to_char(rr.test_date,'w') "
-	        	+"order by p.first_name,p.last_name,extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*)";
-	        }
-	        else if(name1!="off" && type=="off" && year != "off" && month!="off" && week!="off"){
-	        	out.println("<p><center>------(PATIENTS && TIME TO YEAR->MONTH->WEEK) ONLY</center></p>");
-	        	sql="select p.first_name,p.last_name,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*) "
-	        	+"from radiology_record rr,persons p,pacs_images pp where rr.patient_id = p.person_id and pp.record_id = rr.record_id "
-	        	+"group by p.first_name,p.last_name,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w') "
-	        	+"order by p.first_name,p.last_name,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*)";
-	        }
-	        //--------------------------------type...----------------------------------
-	        
-	        else if(name1=="off" && type!="off" && year != "off" && month!="off" && week=="off"){
-	        	out.println("<p><center>------(TEST_TYPE && TIME TO YEAR->MONTH) ONLY</center></p>");
-	        	sql="select rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),count(*) "
-	        	+"from radiology_record rr,pacs_images pp where pp.record_id = rr.record_id "
-	        	+"group by rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date) "
-	        	+"order by rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),count(*)";
-	        }
-	        else if(name1=="off" && type!="off" && year != "off" && month=="off" && week!="off"){
-	        	out.println("<p><center>------(TEST_TYPE && TIME TO YEAR->WEEK) ONLY</center></p>");
-	        	sql="select rr.test_type,extract(year from rr.test_date),to_char(rr.test_date,'ww'),count(*) "
-	        	+"from radiology_record rr,pacs_images pp where pp.record_id = rr.record_id "
-	        	+"group by rr.test_type,extract(year from rr.test_date),to_char(rr.test_date,'ww') "
-	        	+"order by rr.test_type,extract(year from rr.test_date),to_char(rr.test_date,'ww'),count(*)";
-	        }
-	        else if(name1=="off" && type!="off" && year == "off" && month!="off" && week!="off"){
-	        	out.println("<p><center>------(TEST_TYPE && TIME TO MONTH->WEEK) ONLY</center></p>");
-	        	sql="select rr.test_type,extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*) "
-	        	+"from radiology_record rr,pacs_images pp where pp.record_id = rr.record_id "
-	        	+"group by rr.test_type,extract(month from rr.test_date),to_char(rr.test_date,'w') "
-	        	+"order by rr.test_type,extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*)";
-	        }
-	        else if(name1=="off" && type!="off" && year != "off" && month!="off" && week!="off"){
-	        	out.println("<p><center>------(TEST_TYPE && TIME TO YEAR->MONTH->WEEK) ONLY</center></p>");
-	        	sql="select rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*) "
-	        	+"from radiology_record rr,pacs_images pp where pp.record_id = rr.record_id "
-	        	+"group by rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w') "
-	        	+"order by rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*)";
-	        }
-	        //***************triple*************************************************************************5
+	      
+	        //************* Triple ********************************************************************************************4
+	      	//-------- Name, Type, Year are selected --------------------------------
 	        else if(name1!="off" && type!="off" && year != "off" && month=="off" && week=="off"){
 	        	out.println("<p><center>------(PATIENTS && TEST_TYPE && TIME TO YEAR) ONLY</center></p>");
 	        	sql="select p.first_name,p.last_name,rr.test_type,extract(year from rr.test_date),count(*) "
@@ -292,6 +154,33 @@
 	        	+"group by p.first_name,p.last_name,rr.test_type,extract(year from rr.test_date) "
 	        	+"order by p.first_name,p.last_name,rr.test_type,extract(year from rr.test_date),count(*)";
 	        }
+			//-------- Name, Year, Month are selected --------------------------------
+	        else if(name1!="off" && type=="off" && year != "off" && month!="off" && week=="off"){
+	        	out.println("<p><center><------(PATIENTS && YEAR && MONTH) ONLY/center></p>");
+	        	sql="select p.first_name,p.last_name,extract(year from rr.test_date),extract(month from rr.test_date),count(*) "
+	        	+"from radiology_record rr,persons p,pacs_images pp where rr.patient_id = p.person_id and pp.record_id = rr.record_id "
+	        	+"group by p.first_name,p.last_name,extract(year from rr.test_date),extract(month from rr.test_date) "
+	        	+"order by p.first_name,p.last_name,extract(year from rr.test_date),extract(month from rr.test_date),count(*)";
+	        }  
+			//-------- Type, Year, Month are selected --------------------------------
+	        else if(name1=="off" && type!="off" && year != "off" && month!="off" && week=="off"){
+	        	out.println("<p><center>------(TEST_TYPE && TIME TO YEAR->MONTH) ONLY</center></p>");
+	        	sql="select rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),count(*) "
+	        	+"from radiology_record rr,pacs_images pp where pp.record_id = rr.record_id "
+	        	+"group by rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date) "
+	        	+"order by rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),count(*)";
+	        }	
+	        //-------- Year, Month, Day are selected --------------------------------
+	        else if(name1=="off" && type=="off" && year != "off" && month!="off" && week!="off"){
+	        	out.println("<p><center><------(YEAR && MONTH && WEEK) ONLY/center></p>");
+	        	sql="select extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww'),count(*)"
+	        	+" from radiology_record rr,persons p,pacs_images pp "
+	        	+"where rr.patient_id = p.person_id and pp.record_id = rr.record_id "
+	        	+"group by extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww')";
+	        }
+	      
+	        //*************** 4 of them are selected*************************************************************************3
+			// ------------------------- Name, Type Year, Month are selected -----------------------------
 	        else if(name1!="off" && type!="off" && year != "off" && month!="off" && week=="off"){
 	        	out.println("<p><center>------(PATIENTS && TEST_TYPE && TIME TO YEAR->MONTH) ONLY</center></p>");
 	        	sql="select p.first_name,p.last_name,rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),count(*) "
@@ -299,27 +188,31 @@
 	        	+"group by p.first_name,p.last_name,rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date) "
 	        	+"order by p.first_name,p.last_name,rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),count(*)";
 	        }
-	        else if(name1!="off" && type!="off" && year != "off" && month=="off" && week!="off"){
-	        	out.println("<p><center>------(PATIENTS && TEST_TYPE && TIME TO YEAR->WEEK) ONLY</center></p>");
-	        	sql="select p.first_name,p.last_name,rr.test_type,extract(year from rr.test_date),to_char(rr.test_date,'ww'),count(*) "
+	        // ------------------------- Name, Year, Month, Day are selected -----------------------------
+	        else if(name1!="off" && type=="off" && year != "off" && month!="off" && week!="off"){
+	        	out.println("<p><center>------(PATIENTS && TIME TO YEAR->MONTH->WEEK) ONLY</center></p>");
+	        	sql="select p.first_name,p.last_name,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww'),count(*) "
 	        	+"from radiology_record rr,persons p,pacs_images pp where rr.patient_id = p.person_id and pp.record_id = rr.record_id "
-	        	+"group by p.first_name,p.last_name,rr.test_type,extract(year from rr.test_date),to_char(rr.test_date,'ww') "
-	        	+"order by p.first_name,p.last_name,rr.test_type,extract(year from rr.test_date),to_char(rr.test_date,'ww'),count(*)";
+	        	+"group by p.first_name,p.last_name,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww') "
+	        	+"order by p.first_name,p.last_name,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww'),count(*)";
 	        }
-	        else if(name1!="off" && type!="off" && year == "off" && month!="off" && week!="off"){
-	        	out.println("<p><center>------(PATIENTS && TEST_TYPE && TIME TO MONTH->WEEK) ONLY</center></p>");
-	        	sql="select p.first_name,p.last_name,rr.test_type,extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*) "
-	        	+"from radiology_record rr,persons p,pacs_images pp where rr.patient_id = p.person_id and pp.record_id = rr.record_id "
-	        	+"group by p.first_name,p.last_name,rr.test_type,extract(month from rr.test_date),to_char(rr.test_date,'w') "
-	        	+"order by p.first_name,p.last_name,rr.test_type,extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*)";
+	        // ------------------------- Type, Year, Month, Day are selected -----------------------------
+	        else if(name1=="off" && type!="off" && year != "off" && month!="off" && week!="off"){
+	        	out.println("<p><center>------(TEST_TYPE && TIME TO YEAR->MONTH->WEEK) ONLY</center></p>");
+	        	sql="select rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww'),count(*) "
+	        	+"from radiology_record rr,pacs_images pp where pp.record_id = rr.record_id "
+	        	+"group by rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww') "
+	        	+"order by rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww'),count(*)";
 	        }
+	        //*************** All of them are selected*************************************************************************1
 	        else if(name1!="off" && type!="off" && year != "off" && month!="off" && week!="off"){
-	        	out.println("<p><center>------(PATIENTS && TEST_TYPE && TIME TO YEAR->MONTH->WEEK) ONLY</center></p>");
-	        	sql="select p.first_name,p.last_name,rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*) "
+	        	out.println("<p><center>------(PATIENTS && TEST_TYPE && TIME TO YEAR->MONTH->WEEK) </center></p>");
+	        	sql="select p.first_name,p.last_name,rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww'),count(*) "
 	        	+"from radiology_record rr,persons p,pacs_images pp where rr.patient_id = p.person_id and pp.record_id = rr.record_id "
-	        	+"group by p.first_name,p.last_name,rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w') "
-	        	+"order by p.first_name,p.last_name,rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'w'),count(*)";                                   
+	        	+"group by p.first_name,p.last_name,rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww') "
+	        	+"order by p.first_name,p.last_name,rr.test_type,extract(year from rr.test_date),extract(month from rr.test_date),to_char(rr.test_date,'ww'),count(*)";                                   
 	        }
+	        
 	        else{
 	        	out.println("condition unknow");
 	        }
@@ -705,9 +598,9 @@
 
         		}
         	out.println("</table></center>");
-        	out.println("<center><FORM ACTION='dataAnalisis3.jsp' METHOD='post' >");
-        	out.println("<INPUT TYPE='submit' NAME='go2' VALUE='Prescribe another one' style= 'width: 500; height: 30'></FORM></center>");
-			out.println("<center><FORM ACTION='../view/administrator.html' METHOD='post' ><INPUT TYPE='submit' NAME='ad_back' VALUE='GO BACK TO Administrator' style= 'width: 500; height: 30'></FORM></center></div></BODY></HTML>");	
+        	out.println("<center><FORM ACTION='dataAnalysis.jsp' METHOD='post'><br><br>");
+        	out.println("<INPUT TYPE='submit' NAME='dataAnalysis' VALUE='Do Another Analysis' style= 'width: 300; height: 30'></FORM></center><br><br><br>");
+			out.println("<center><FORM ACTION='../view/administrator.html' METHOD='post' ><INPUT TYPE='submit' NAME='ad_back' VALUE='Back' style= 'width: 150; height: 30'></FORM></center></div></BODY></HTML>");	
         		
 			try{
                 conn.close();

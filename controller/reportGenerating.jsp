@@ -15,13 +15,20 @@
 	    
 	    //get user input
 	    String diagnosis = (request.getParameter("diagnosis"));
+	    
 	    String Year      = (request.getParameter("Year"));
-	    String Month     = (request.getParameter("Month"));
+	    String Month     = (request.getParameter("Month"));    
 	    String Day       = (request.getParameter("Day"));
+	    
 	    String year      = (request.getParameter("YEAR"));
 	    String month     = (request.getParameter("MONTH"));
 	    String day       = (request.getParameter("DAY"));
 
+	    /*
+	    out.println("<center>"+ diagnosis +"<br>");
+	    out.println(Year + " " + Month + " " + Day + "<br>");
+	    out.println(year + " " + month + " " + day + "<br></center>");
+		*/
 	    
         //establish the connection to the underlying database
     	Connection conn = null;
@@ -59,7 +66,8 @@
         
         
 		String getPersonalInfo="select p.first_name, p.last_name, p.address, p.phone from persons p where p.person_id = ";
-        String listgener = "select p.person_id,min(rr.test_date), rr.diagnosis from persons p, radiology_record rr "
+        
+		String listgener = "select p.person_id,min(rr.test_date), rr.diagnosis from persons p, radiology_record rr "
         		+"where p.person_id = rr.patient_id and rr.diagnosis = '"+diagnosis+"' and rr.test_date between '"+From+"' and '"+To+"' "
         		+"group by p.person_id, rr.diagnosis"; 
     	
@@ -128,8 +136,8 @@
           	out.println("</td>");
 	    	out.println("</tr>");
         } 
-        out.println("</table>");
-        out.println("<FORM ACTION='reportGenerating.html' METHOD='post' ><INPUT TYPE='submit' NAME='ad_back' VALUE='Back'>");
+        out.println("</table><br><br>");
+        out.println("<FORM ACTION='../view/reportGenerating.html' METHOD='post' ><INPUT TYPE='submit' NAME='ad_back' VALUE='Back'>");
     	out.println("</FORM>");
     	out.println("</div></CENTER></BODY></HTML></FORM>");
         
